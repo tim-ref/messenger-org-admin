@@ -16,7 +16,7 @@
  #limitations under the License.
 
 # Builder
-FROM node:18-alpine as base
+FROM node:21-alpine as base
 
 ARG PUBLIC_URL=/
 ARG REACT_APP_SERVER
