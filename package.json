@@ -1,0 +1,89 @@
+{
+  "name": "synapse-admin",
+  "version": "0.8.7",
+  "description": "Admin GUI for the Matrix.org server Synapse",
+  "author": "Awesome Technologies Innovationslabor GmbH",
+  "license": "Apache-2.0",
+  "homepage": ".",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Awesome-Technologies/synapse-admin"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.1.1",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/history": "^5.0.0",
+    "@types/jest-expect-message": "^1.1.0",
+    "@types/jsdom": "^21.1.1",
+    "@types/react-router-dom": "^5.3.3",
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.0",
+    "is-ci": "^3.0.1",
+    "jest-expect-message": "^1.1.3",
+    "jest-extended": "^3.2.4",
+    "jest-fetch-mock": "^3.0.3",
+    "prettier": "^2.2.0",
+    "ra-test": "^3.15.0",
+    "start-server-and-test": "^2.0.0",
+    "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "@types/jest": "^29.5.1",
+    "@types/node": "^18.15.13",
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "fhir-kit-client": "^1.9.2",
+    "jose": "^4.14.1",
+    "papaparse": "^5.2.0",
+    "prop-types": "^15.7.2",
+    "ra-language-chinese": "^2.0.10",
+    "ra-language-german": "^3.13.4",
+    "react": "^17.0.0",
+    "react-admin": "^3.19.7",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^5.0.1",
+    "typescript": "<4.8.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "TSC_COMPILE_ON_ERROR=true react-scripts start",
+    "start:e2e": "BROWSER=none REACT_APP_VZD= react-scripts start",
+    "build": "react-scripts build",
+    "fix:other": "yarn prettier --write",
+    "fix:code": "yarn test:lint --fix",
+    "fix": "yarn fix:code && yarn fix:other",
+    "prettier": "prettier \"**/*.{ts,tsx,js,jsx,json,scss}\"",
+    "test:code": "CI=true react-scripts test",
+    "test:interactive": "react-scripts test",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
+    "test:lint": "eslint --ignore-path .gitignore --ext .js,.jsx,.ts,.tsx .",
+    "test:style": "yarn prettier --list-different",
+    "e2e:install": "cd e2e && yarn install",
+    "e2e:run": "cd e2e && (ELECTRON_ENABLE_LOGGING=1 ELECTRON_EXTRA_LAUNCH_ARGS=--lang=en yarn cypress run --browser chrome)",
+    "e2e:e2e": "start-server-and-test start:e2e http://127.0.0.1:3000 e2e:run",
+    "e2e": "yarn e2e:install && yarn e2e:e2e",
+    "test": "yarn test:style && yarn test:lint && yarn test:code",
+    "eject": "react-scripts eject",
+    "prepare": "is-ci || husky install",
+    "fhir-gen": "ts-node src/data_providers/fhir/generateSpecialty.ts"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "https://fhir-directory-ref.vzd.ti-dienste.de"
+}

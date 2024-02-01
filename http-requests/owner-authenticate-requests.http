@@ -1,0 +1,62 @@
+###
+POST http://localhost:8083/_matrix/client/v3/login
+Content-Type: application/json
+
+{
+  "type": "m.login.password",
+  "user": "admin",
+  "password": "admin"
+}
+
+
+> {%
+    client.test("Login request was successful (Matrix Homeserver)", function () {
+        client.assert(response.status === 200);
+    });
+
+    client.global.set("accessToken", response.body.access_token);
+%}
+
+###
+POST http://localhost:8083/_matrix/client/v3/user/@admin:synapse/openid/request_token
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{}
+
+
+> {%
+    client.test("Token exchange was successful (oidcToken)", function () {
+        client.assert(response.status === 200);
+    });
+    client.global.set("oidcToken", response.body.access_token);
+%}
+
+###
+POST http://localhost:8080/backend/regservice/openid/user/%40admin%3Asynapse/requesttoken
+Content-Type: application/x-www-form-urlencoded
+
+request_token={{oidcToken}}
+
+
+> {%
+    client.test("Token exchange was successful (regServiceAccessToken)", function () {
+        client.assert(response.status === 200);
+    });
+    client.global.set("regServiceAccessToken", response.body.access_token);
+%}
+
+###
+GET https://fhir-directory-ref.vzd.ti-dienste.de/owner-authenticate
+Authorization: Bearer {{regServiceAccessToken}}
+
+
+> {%
+
+    client.test("Token exchange was successful (ownerToken)", function () {
+        client.assert(response.status === 200);
+    });
+    client.global.set("ownerToken", response.body.access_token);
+%}
+
+

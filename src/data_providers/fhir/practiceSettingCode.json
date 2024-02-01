@@ -1,0 +1,1811 @@
+{
+  "valueSet": [
+    {
+      "id": "1.2.276.0.76.11.37",
+      "name": "IHEXDSpracticeSettingCode",
+      "displayName": "IHE XDS practiceSettingCode",
+      "statusCode": "final",
+      "versionLabel": "v3",
+      "canonicalUri": "http://ihe-d.de/ValueSets/IHEXDSpracticeSettingCode",
+      "effectiveDate": "2019-05-17T13:46:31",
+      "desc": [
+        {
+          "language": "en-US",
+          "#text": "&lt;b&gt;practiceSettingCode (XDSDocumentEntry)&lt;/b&gt;&lt;br/&gt;The code for an XDS Document that specifies the clinical specialty where the act that resulted in the document was performed (e.g., Family Practice, Laboratory, Radiology)."
+        }
+      ],
+      "sourceCodeSystem": [
+        {
+          "id": "1.3.6.1.4.1.19376.3.276.1.5.4",
+          "identifierName": "Ärztliche Fachrichtungen",
+          "canonicalUri": "urn:oid:1.3.6.1.4.1.19376.3.276.1.5.4",
+          "canonicalUriDSTU2": "http://ihe-d.de/CodeSystems/AerztlicheFachrichtungen",
+          "canonicalUriSTU3": "http://ihe-d.de/CodeSystems/AerztlicheFachrichtungen",
+          "canonicalUriR4": "http://ihe-d.de/CodeSystems/AerztlicheFachrichtungen"
+        },
+        {
+          "id": "1.3.6.1.4.1.19376.3.276.1.5.5",
+          "identifierName": "Nicht-ärztliche Fachrichtungen",
+          "canonicalUri": "urn:oid:1.3.6.1.4.1.19376.3.276.1.5.5",
+          "canonicalUriDSTU2": "http://ihe-d.de/CodeSystems/NichtaerztlicheFachrichtungen",
+          "canonicalUriSTU3": "http://ihe-d.de/CodeSystems/NichtaerztlicheFachrichtungen",
+          "canonicalUriR4": "http://ihe-d.de/CodeSystems/NichtaerztlicheFachrichtungen"
+        }
+      ],
+      "publishingAuthority": [
+        {
+          "name": "IHE Deutschland e.V.",
+          "inherited": "project",
+          "addrLine": [
+            "Charlottenstr. 42",
+            "10117 Berlin",
+            "Fon: +49 (0)30 / 22 00 24-70",
+            "Fax: +49 (0)30 / 22 00 24-799",
+            "Internet: http://www.ihe-d.de"
+          ]
+        }
+      ],
+      "conceptList": [
+        {
+          "concept": [
+            {
+              "code": "ALLG",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Allgemeinmedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Allgemeinmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Allgemeinmedizin beinhaltet die Grundversorgung eines Patienten bei körperlichen und/oder seelischen Gesundheitsstörungen. Weiterhin gehören die Aspekte der Prävention und Rehabilitation in den Versorgungsbereich der Allgemeinmedizin.&lt;br clear=\"none\"/&gt;&lt;i&gt;Nutzungshinweis: Dazu zählen auch hausärztlich tätige Praxen von Praktischen Ärzten.&lt;/i&gt;"
+                }
+              ]
+            },
+            {
+              "code": "ANAE",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Anästhesiologie",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Anästhesiologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Anästhesiologie umfasst neben den Anästhesieverfahren selbst die Aufrechterhaltung der Vitalfunktionen eines Patienten während eines Eingriffs.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "ARBE",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Arbeitsmedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Arbeitsmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Arbeitsmedizin ist ein präventivmedizinisches Fachgebiet und umfasst einerseits die Wechselbeziehungen zwischen Arbeits- und Lebenswelten, andererseits auch die Gesundheit und Krankheiten. Der wesentliche Aspekt ist hierbei der Erhalt und die Förderung der physischen und psychischen Gesundheit und Leistungsfähigkeit des arbeitenden\n                            Menschen.&lt;br/&gt;&lt;i&gt;Nutzungshinweis: Das Konzept umfasst auch die Musikermedizin, auch wenn Patienten aus diesem Bereich nicht notwendigerweise professionelle Musiker sind.&lt;/i&gt;"
+                }
+              ]
+            },
+            {
+              "code": "AUGE",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Augenheilkunde",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Augenheilkunde"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Augenheilkunde  umfasst die Diagnose und Behandlung aller Erkrankungen bzw. Funktionsstörungen des Sehorgans, seiner Anhangsorgane sowie des Sehsinnes.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "CHIR",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Chirurgie",
+              "level": "0",
+              "type": "S",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Chirurgie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Chirurgie umfasst alle operativen Therapien von Krankheiten sowie von Verletzungen. Teilgebiete der Chirurgie etablierten sich als \"Spezialdisziplin\". &lt;br clear=\"none\"/&gt;&lt;i&gt;Nutzungshinweis: Teilgebiete für die keine eigenen Konzepte aufgeführt sind, z.B. die Handchirurgie, können mit diesem Konzept abgedeckt werden.&lt;/i&gt;"
+                }
+              ]
+            },
+            {
+              "code": "ALCH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Allgemeinchirurgie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Allgemeinchirurgie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Allgemeinchirurgie war früher der Oberbergriff für die gesamte Chirurgie. Bedingt durch die Spezialisierungen in der Chirurgie entwickelte sich die Allgemeinchirurgie als \"Auffangbecken\", in welchem alle Eingriffe durchgeführt werden, die nicht durch eine Spezialisierung abgedeckt werden.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "GFCH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Gefäßchirurgie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Gefäßchirurgie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Gefäßchirurgie ist eine Spezialisierung des Fachgebietes Chirurgie. Das Fachgebiet umfasst die Behandlung der Blutgefäße bei Verschlusserkrankungen oder auch Aneurysmen.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "HZCH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Herzchirurgie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Herzchirurgie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Herzchirurgie ist eine Spezialisierung des Fachgebietes Chirurgie. Das Fachgebiet umfasst die Therapie von Erkrankungen sowie von Verletzungen des Herzens und der herznahen Gefäße.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "KDCH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Kinderchirurgie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Kinderchirurgie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Kinderchirurgie ist eine Spezialisierung des Fachgebietes Chirurgie. Das Fachgebiet umfasst die operative und konservative Therapie von Erkrankungen, Verletzungen, Fehlbildungen im Kindesalter inkl. der Pränatalchirurgie.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "ORTH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Orthopädie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Orthopädie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Orthopädie ist eine Spezialisierung des Fachgebietes Chirurgie. Das Fachgebiet umfasst die Erkrankungen und Fehlbildungen des Stütz- und Bewegungsapparates. &lt;br/&gt;&lt;i&gt;Nutzungshinweis: Falls die Wirbelsäulenchirurgie organisatorisch als Teil der Orthopädie (und nicht als Teil der Neurochirurgie) geführt wird, deckt dieses Konzept auch die\n                            Wirbelsäulenchirurgie ab.&lt;/i&gt;"
+                }
+              ]
+            },
+            {
+              "code": "PLCH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Plastische und Ästhetische Chirurgie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Plastische und Ästhetische Chirurgie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Plastische Chirurgie ist eine Spezialisierung des Fachgebietes Chirurgie. Das Fachgebiet umfasst formverändernde oder wiederherstellende Eingriffe am menschlichen Körper.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "THCH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Thoraxchirurgie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Thoraxchirurgie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Thoraxchirurgie ist eine Spezialisierung des Fachgebietes Chirurgie. Das Fachgebiet umfasst diagnostische und therapeutische Eingriffe an den Organen des Brustkorbs ausgenommen dem Herzen. D.h. es umfasst die Versorgung von Erkrankungen und Verletzungen der Lunge, der Pleura, des Bronchialsystems, des Mediastinums und der Thoraxwand.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "UNFC",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Unfallchirurgie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Unfallchirurgie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Unfallchirurgie ist eine Spezialisierung des Fachgebietes Chirurgie. Das Fachgebiet umfasst die Versorgung von Verletzungen sowie die  Behandlung von Mehrfachverletzten einschließlich des entsprechenden Traumamanagements.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "VICH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Viszeralchirurgie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Viszeralchirurgie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Viszeralchirurgie ist eine Spezialisierung des Fachgebietes Chirurgie. Das Fachgebiet umfasst die Eingriffe an den Organen des Bauchraumes sowie die operative Behandlung der Schilddrüse und der Nebenschilddrüse.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "FRAU",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Frauenheilkunde und Geburtshilfe",
+              "level": "0",
+              "type": "S",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Frauenheilkunde und Geburtshilfe"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Frauenheilkunde beinhaltet die Diagnose und Therapie der Erkrankungen des weiblichen Sexual- und Fortpflanzungstraktes. Die Fachrichtung der Geburtshilfe befasst sich mit der Überwachung von Schwangerschaften sowie der Vorbereitung, Durchführung und Nachbehandlung von Geburten.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "GEND",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Gynäkologische Endokrinologie und Reproduktionsmedizin",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Gynäkologische Endokrinologie und Reproduktionsmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die gynäkologische Endokrinologie befasst sich mit der Diagnostik und Therapie von Hormonstörungen. Die Reproduktionsmedizin befasst sich mit Fragen bei unerfülltem Kinderwunsch. "
+                }
+              ]
+            },
+            {
+              "code": "GONK",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Gynäkologische Onkologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Gynäkologische Onkologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die gynäkologische Onkologie befasst sich mit  Vorsorge, Diagnostik, Therapie und Nachsorge von Krebserkrankungen bei der Brust bzw. des weiblichen Genitals.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "PERI",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Perinatalmedizin",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Perinatalmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Perinatalmedizin befasst sich mit den Erkrankungen und Gefährdungen von Mutter und Kind im perinatalen Zeitraum, dies ist der Zeitraum zwischen der 24. Schwangerschaftswoche und dem 7. Tag nach der Geburt.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "GERI",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Geriatrie",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Geriatrie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Geriatrie beschäftigt sich mit der Versorgung von akuten und chronischen Erkrankungen sowie der Rehabilitation und Prävention alter Patienten. "
+                }
+              ]
+            },
+            {
+              "code": "HNOH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Hals-Nasen-Ohrenheilkunde",
+              "level": "0",
+              "type": "S",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Hals-Nasen-Ohrenheilkunde"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Gebiet der Hals-Nasen-Ohrenkunde befasst sich mit Erkrankungen, Verletzungen, Fehlbildungen sowie Funktionsstörungen im Kopf-, Halsbereich, insbesondere der Ohren, der oberen und unteren Luftwege sowie der Speiseröhre.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "HRST",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Sprach-, Stimm- und kindliche Hörstörungen",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Sprach-, Stimm- und kindliche Hörstörungen"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "&lt;span style=\"font-size:11.0pt;font-family:&amp;#34;Calibri&amp;#34;,sans-serif;mso-fareast-font-family: &amp;#34;Times New Roman&amp;#34;;mso-bidi-font-family:&amp;#34;Times New Roman&amp;#34;;mso-ansi-language: DE;mso-fareast-language:EN-US;mso-bidi-language:AR-SA\"&gt;Das Fachgebiet Sprach-, Stimm- und kindliche Hörstörungen umfasst die Diagnostik, Therapie und Forschung in den\n                            Bereichen Stimmstörungen, kindliche Hörstörungen, Wahrnehmungsstörungen, Störungen der Sprech- und Sprachentwicklung, erworbenen Sprech- und Sprachstörungen (z.B. Aphasien) und Schluckstörungen.&lt;/span&gt;"
+                }
+              ]
+            },
+            {
+              "code": "HAUT",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Haut- und Geschlechtskrankheiten",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Haut- und Geschlechtskrankheiten"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Konzept umfasst sowohl die Dermatologie, wie auch die Phlebologie und die Venerologie. Das Gebiet der Dermatologie befasst sich mit Diagnose und Therapie von Erkrankungen der Haut. Das Gebiet der Phlebologie umfasst die Erkennung und Behandlung von Gefäßerkrankungen. Die Venerologie beinhaltet die Diagnose und Therapie der sexuell übertragbaren\n                            Erkrankungen.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "HIST",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "obsolet",
+              "level": "0",
+              "type": "D",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "synonym",
+                  "displayName": "Histologie / Zytologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Konzept ist obsolet; stattdessen kann das Konzept PATH (Pathologie) verwendet werden."
+                }
+              ]
+            },
+            {
+              "code": "HUMA",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Humangenetik",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Humangenetik"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Humangenetik beschäftigt sich mit dem Erbgut des Menschen. Zum Themenumfeld in der Humangenetik gehören insbesondere die Aufklärung, Erkennung und Behandlung genetisch bedingter Erkrankungen, einschließlich der genetischen Beratungen von Patienten, Angehörigen und behandelnden Ärzten. &lt;br clear=\"none\"/&gt;&lt;i&gt;Nutzungshinweis:  Falls die Pädiatrische\n                            Genetik organisatorisch als Teil der Humangenetik (und nicht als Teil der Pädiatrie) geführt wird, deckt dieses Konzept auch die Pädiatrische Genetik ab.&lt;/i&gt;"
+                }
+              ]
+            },
+            {
+              "code": "HYGI",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Hygiene und Umweltmedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Hygiene und Umweltmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Hygiene beschäftigt sich mit krankmachenden Einwirkungen auf den Organismus und versucht diese durch verschiedene Maßnahmen (Aufklärung, Reinigung, Desinfektion, Sterilisation, Grenzwerte) auszuschalten. Die Umweltmedizin beschäftigt sich mit Fragestellungen, die hinsichtlich Prävention, Diagnose und Therapie von Erkrankungen mit Umweltfaktoren in\n                        Verbindung gebracht werden.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "INNE",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Innere Medizin",
+              "level": "0",
+              "type": "S",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Innere Medizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Gebiet der Inneren Medizin befasst sich mit der Prävention, Diagnostik, nicht-operativen Therapie und der Rehabilitation bei Erkrankungen sämtlicher Organsysteme des Körpers. Die Innere Medizin beinhaltet mehrere Teilgebiete, die sich im Rahmen von Spezialisierungen entwickelten.&lt;br clear=\"none\"/&gt;&lt;i&gt;Nutzungshinweis: Teilgebiete, für die keine eigenen\n                            Konzepte aufgeführt sind wie z.B. die klinische Immunologie, außerhalb der Rheumatologie, können mit diesem Konzept abgedeckt werden.&lt;/i&gt;&lt;i&gt; Dazu zählen auch hausärztlich tätige Arztpraxen für Innere Medizin.&lt;/i&gt;"
+                }
+              ]
+            },
+            {
+              "code": "ANGI",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Angiologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Angiologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Angiologie ist eine Spezialisierung des Fachgebietes Innere Medizin. Das Gebiet beschäftigt sich mit der Funktion und den Erkrankungen der Arterien, Venen und Lymphgefäße, insbesondere mit Diagnose und Therapie der verschiedenen Gefäßerkrankungen.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "ENDO",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Endokrinologie und Diabetologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Endokrinologie und Diabetologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Endokrinologie und Diabetologie ist eine Spezialisierung des Fachgebietes Innere Medizin. Die Endokrinologie beschäftigt sich mit der der Funktion sowie den (krankhaften) Störungen der hormonproduzierenden Organe. Dazu zählt auch die Diabetologie.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "GAST",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Gastroenterologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Gastroenterologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Gastroenterologie ist eine Spezialisierung des Fachgebietes Innere Medizin. Das Gebiet beschäftigt sich mit den Erkrankungen des Magen-Darm-Traktes, der Leber und der zum Verdauungstrakt gehörenden Hormondrüsen wie der Bauchspeicheldrüse.&lt;br/&gt;&lt;i&gt;Nutzungshinweis: Das Konzept umfasst auch die Hepatologie.&lt;/i&gt;"
+                }
+              ]
+            },
+            {
+              "code": "HAEM",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Hämatologie und internistische Onkologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Hämatologie und internistische Onkologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Hämatologie und internistische Onkologie ist eine Spezialisierung des Fachgebietes Innere Medizin. Dieses medizinische Teilgebiet beschäftigt sich mit gut- und bösartigen Erkrankungen des Blutes, der Lymphknoten und des lymphatischen Systems sowie bösartigen soliden Tumoren.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "KARD",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Kardiologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Kardiologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Kardiologie ist eine Spezialisierung des Fachgebietes Innere Medizin. Das Gebiet befasst sich mit Diagnose und Therapie von Herz-Kreislauf-Erkrankungen. "
+                }
+              ]
+            },
+            {
+              "code": "NEPH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Nephrologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Nephrologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Nephrologie ist eine Spezialisierung des Fachgebietes Innere Medizin. Das Gebiet beschäftigt mit Diagnostik und Therapie von Erkrankungen der Nieren.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "PNEU",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Pneumologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Pneumologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Pneumologie ist eine Spezialisierung des Fachgebietes Innere Medizin. Das Gebiet beschäftigt sich mit der  Prophylaxe, Diagnose und nicht-operativen Therapie von Erkrankungen der Lunge, der Bronchien und der Pleura.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "RHEU",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Rheumatologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Rheumatologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Rheumatologie ist eine Spezialisierung des Fachgebietes Innere Medizin. Das Konzept umfasst auch die Fachrichtung 'orthopädische Rheumatologie'. &lt;b&gt; &lt;/b&gt;Das Gebiet beschäftigt &lt;b&gt;sich&lt;/b&gt; mit Diagnose und Therapie der rheumatischen Erkrankungen, d.h. Erkrankungen  im Bereich der Gelenke, Gelenkkapseln, Sehnen, Knochen, Muskeln und des Bindegewebes,\n                        die nicht durch eine akute Verletzung oder einen Tumor hervorgerufen werden. "
+                }
+              ]
+            },
+            {
+              "code": "INTM",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Intensivmedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Intensivmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Intensivmedizin beschäftigt sich mit der Diagnostik und Therapie lebensbedrohlicher Zustände sowie Krankheiten, die derartige Zustände beinhalten.&lt;br clear=\"none\"/&gt;&lt;i&gt;Nutzungshinweis: Falls eine Intermediate Care Unit organisatorisch als Teil der Intensivmedizin (und nicht als Teil der jeweiligen Fachabteilung) geführt wird, deckt\n                            dieses Konzept auch die Intermediate Care Unit ab.&lt;/i&gt;&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "INTZ",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Interdisziplinäre Zusammenarbeit",
+              "level": "0",
+              "type": "S",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Interdisziplinäre Zusammenarbeit"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Interdisziplinäre Zusammenarbeit bezeichnet die Kooperationen verschiedener ärztlichen Fachrichtungen, die in einem gemeinsamen organisatorischen Rahmen an klinischen und wissenschaftlichen Fragestellungen arbeiten. Wenn möglich sollten die untergeordneten Fachrichtungen verwendet werden."
+                }
+              ]
+            },
+            {
+              "code": "INTO",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Interdisziplinäre Onkologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Interdisziplinäre Onkologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Gebiet der Onkologie beschäftigt sich mit der Prävention, der Diagnostik, der Therapie und der Nachsorge von Krebserkrankungen. Hierbei ist oftmals eine fächerübergreifende (\"interdisziplinäre\") Zusammenarbeit erforderlich, woraus sich interdisziplinäre Behandlungszentren entwickelten.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "INTS",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Interdisziplinäre Schmerzmedizin",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Interdisziplinäre Schmerzmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Schmerzmedizin beschäftigt sich mit der Diagnostik und Therapie des chronischen Schmerzes. "
+                }
+              ]
+            },
+            {
+              "code": "TRPL",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Transplantationsmedizin",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Transplantationsmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "&lt;div class=\"yui-wk-div\"&gt;Die Transplantationsmedizin befasst sich mit der Übertragung von Zellen, Geweben, Organen oder Organsystemen von einem Organismus auf einen anderen Organismus. Die gesetzlichen Rahmenbedingungen der Transplantationsmedizin sind in Deutschland im Transplantationsgesetz geregelt, woraus sich die Bildung interdisziplinärer\n                            Einrichtungen zur Übertragung von Spenderorganen ableitet. Solche Transplantationszentren übernehmen in Ergänzung zu den jeweiligen spezialisierten klinischen Fachgebieten (z.B. Viszeralchirurgie, Herzchirurgie, Nephrologie) insbesondere Aufgaben im Bereich der Indikationsstellung, Vorbereitung, Dokumentation und Nachsorge bei Organtransplantationen und\n                            Lebend-Organspenden, sowie beim Wartelistenmanagement und bei erforderlicher psychischer Betreuung der Patienten im Krankenhaus vor und nach der Organübertragung. Sofern Dokumente in solchen oder vergleichbaren Transplantationsmedizinischen Einrichtungen erstellt werden und nicht einer spezifischeren, an Transplantationen beteiligten Fachrichtung zuzuordnen sind, können\n                            sie mit diesem Konzept codiert werden. &lt;/div&gt;&lt;div class=\"yui-wk-div\"&gt;&lt;i&gt;Dokumente aus der Transplantationsimmunologie sollen mit dem Konzept TRAN (Transfusionsmedizin) codiert werden.&lt;/i&gt; &lt;/div&gt;"
+                }
+              ]
+            },
+            {
+              "code": "SELT",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "seltene Erkrankungen",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "seltene Erkrankungen"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Fachrichtung \"seltene Erkrankungen\" ist die Disziplin, die sich mit der Diagnostik und Behandlung von seltenen Erkrankungen (z.B. laut EU Prävalenz 1:2000 Erkrankungen) beschäftigt."
+                }
+              ]
+            },
+            {
+              "code": "KIJU",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Kinder- und Jugendmedizin",
+              "level": "0",
+              "type": "S",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Kinder- und Jugendmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Kinder- und Jugendmedizin beschäftigt sich mit Prävention, Diagnose und Therapie von Erkrankungen des kindlichen und des jugendlichen Organismus sowie den Entwicklungsstörungen und Fehlbildungen bei einem Kind.&lt;br/&gt;&lt;i&gt;Nutzungshinweis:  Falls die Pädiatrische Genetik organisatorisch als Teil der Pädiatrie (und nicht als Teil der\n                            Humangenetik) geführt wird, deckt dieses Konzept auch die Pädiatrische Genetik ab.&lt;/i&gt;"
+                }
+              ]
+            },
+            {
+              "code": "KONK",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Kinder-Hämatologie und -Onkologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Kinder-Hämatologie und -Onkologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Kinder-Hämatologie und -Onkologie ist eine Spezialisierung des Fachgebietes der Kinder- und Jugendmedizin. Das Gebiet beschäftigt mit der Diagnose und Therapie von Blut- und Tumorerkrankungen bei Kindern und Jugendlichen.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "KKAR",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Kinder-Kardiologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Kinder-Kardiologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Kinderkardiologie ist eine Spezialisierung des Fachgebietes der Kinder- und Jugendmedizin. Das Gebiet beschäftigt sich mit dem frühestmöglichen Erkennen und Behandeln von kindlichen angeborenen Herzfehlern.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "NNAT",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Neonatologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Neonatologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Neonatologie ist eine Spezialisierung des Fachgebietes der Kinder- und Jugendmedizin. Das Gebiet beschäftigt sich mit Diagnose und Therapie der Erkrankungen von Neugeborenen.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "NPAE",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Neuropädiatrie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Neuropädiatrie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Neuropädiatrie ist eine Spezialisierung des Fachgebietes der Kinder- und Jugendmedizin. Das Gebiet beschäftigt sich mit der Prävention, Diagnose und Therapie von Nervenkrankheiten von Kindern.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "KPSY",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Kinder- und Jugendpsychiatrie und -psychotherapie",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Kinder- und Jugendpsychiatrie und -psychotherapie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Kinder- und Jugendpsychiatrie und -psychotherapie beinhaltet Diagnostik, die nichtoperative Therapie sowie Prävention und Rehabilitation von psychischen, psychosomatischen, entwicklungsbedingten und neurologischen Erkrankungen oder Störungen im Kindes- und Jugendalter, ebenso psychische und soziale Verhaltensauffälligkeiten bei Kindern\n                        und Jugendlichen.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "LABO",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Laboratoriumsmedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Laboratoriumsmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Laboratoriumsmedizin beschäftigt sich mit der Untersuchung von Körperflüssigkeiten und -ausscheidungen zum Zwecke der Diagnostik bzw. Verlaufs- und Therapiekontrolle. Durch dieses Konzept werden auch die Konzepte \"Immunologisches Labor\" und \"Zellmarkerlabor\" abgedeckt.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "MIKR",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Mikrobiologie, Virologie und Infektionsepidemiologie",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Mikrobiologie, Virologie und Infektionsepidemiologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Mikrobiologie beschäftigt sich mit der Erforschung von Mikroorganismen, ihrem Stoffwechsel und ihrer Wirkung auf andere Organismen. Die Virologie ist die Lehre von den Viren. Die Infektionsepidemiologie beschäftigt sich  mit der Epidemiologie von übertragbaren Erkrankungen.&lt;br clear=\"none\"/&gt;In diesen drei Fachgebieten wird mittels der Labordiagnostik\n                        die Ursache von durch Mikroorganismen, Viren und anderen übertragbaren Stoffen ausgelöste Erkrankungen gesucht. "
+                }
+              ]
+            },
+            {
+              "code": "MKGC",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Mund-Kiefer-Gesichtschirurgie",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Mund-Kiefer-Gesichtschirurgie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Mund-, Kiefer- und Gesichtschirurgie umfasst die Prävention, Diagnostik, Therapie und Nachsorge von Erkrankungen, Verletzungen oder Fehlbildungen im Bereich des Kiefers, des Gesichtes, der Zähne und des Mund- und Rachenraumes bis hin zum Halsbereich.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "NATU",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Naturheilverfahren und alternative Heilmethoden",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Naturheilverfahren und alternative Heilmethoden"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Naturheilverfahren umfassen Maßnahmen, die sich keiner technologischen Hilfsmittel bedienen und die Selbstheilungskräfte des Körpers stärken wollen.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "NOTF",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Notfallmedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Notfallmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Notfallmedizin befasst sich mit der Diagnostik und Therapie von akut eingetretenen, unter Umständen lebensbedrohlichen Gesundheitsstörungen. Das Gebiet hat die zwei Spezialisierungen \"präklinische Rettungsmedizin\" und \"Katastrophenmedizin\".&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "NRCH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Neurochirurgie",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Neurochirurgie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Neurochirurgie befasst sich mit der operativen Behandlung von Fehlbildungen, Erkrankungen oder Verletzungen des peripheren oder zentralen Nervensystems.&lt;br clear=\"none\"/&gt;&lt;i&gt;Nutzungshinweis: Falls die Wirbelsäulenchirurgie organisatorisch als Teil der Neurochirurgie (und nicht als Teil der Orthopädie) geführt wird, deckt dieses Konzept\n                            auch die Wirbelsäulenchirurgie ab.&lt;/i&gt;"
+                }
+              ]
+            },
+            {
+              "code": "NEUR",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Neurologie",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Neurologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Neurologie umfasst die Prophylaxe, Diagnose und (nicht-operative) Therapie von Erkrankungen des zentralen, peripheren und vegetativen Nervensystems.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "NUKL",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Nuklearmedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Nuklearmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Nuklearmedizin beschäftigt sich mit der Anwendung radioaktiver Substanzen in Diagnostik und Therapie.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "GESU",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Öffentliches Gesundheitswesen",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Öffentliches Gesundheitswesen"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet des Öffentlichen Gesundheitswesens befasst sich mit der Aufrechterhaltung der Gesundheit der Bevölkerung sowie der Prophylaxe, Diagnose und Therapie von Erkrankungen.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "PALL",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Palliativmedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Palliativmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Palliativmedizin beschäftigt sich mit der Sicherstellung der bestmöglichen Lebensqualität von Patienten, die unter einer unheilbaren Krankheit im fortgeschrittenen Stadium leiden und nur noch eine begrenzte Lebenszeit haben.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "PATH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Pathologie",
+              "level": "0",
+              "type": "S",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Pathologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Pathologie beschäftigt sich mit der Erforschung von abnormen und/oder krankhaften Vorgängen und Zuständen von Lebewesen sowie der diesen Zuständen zugrundeliegenden Ursachen. Das Konzept deckt auch die Histologie und die Zytologie ab. Die Histologie (Gewebelehre) befasst sich mit dem Aufbau von biologischen Geweben. Im diagnostischen\n                        Kontext bezeichnet sie die morphologische Untersuchung von Zellen und Geweben. Unter Zytologie versteht man im Allgemeinen die Lehre vom Aufbau der Zelle und ihren Funktionen, im medizinischen Umfeld wird mit diesem Begriff die Zytodiagnostik an einzelnen Zellen bezeichnet. Auch folgende diagnostische Disziplinen und Labore sind mit diesem Konzept abzubilden:\n                        Molekularpathologisches Labor, Immunhistologisches Labor, Pathologielabor, Histologie-Labor, Zytologie-Labor.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "NPAT",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Neuropathologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Neuropathologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Neuropathologie beschäftigt sich mit den Krankheitserscheinungen und/oder den Veränderungen des neuronalen Gewebes.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "PHAR",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Pharmakologie",
+              "level": "0",
+              "type": "S",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Pharmakologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Gebiet der Pharmakologie beschäftigt sich mit den Wechselwirkungen zwischen (Wirk-) Stoffen und Lebewesen &lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "TOXI",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Toxikologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Toxikologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Gebiet der Toxikologie umfasst die Lehre der Giftstoffe. Dies beinhaltet insbesondere auch die Diagnose und Therapie von Vergiftungen. Dabei ist die Toxikologie ein interdisziplinäres Fachgebiet, in dem neben Ärzten auch Chemiker und Biochemiker als Toxikologen arbeiten.&lt;br/&gt;&lt;i&gt;Nutzungshinweis: Falls die forensische Toxikologie organisatorisch als\n                            Teil der Toxikologie (und nicht als Teil der Rechtsmedizin) geführt wird, deckt dieses Konzept auch die forensische Toxikologie ab.&lt;/i&gt;"
+                }
+              ]
+            },
+            {
+              "code": "REHA",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Physikalische und Rehabilitative Medizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Physikalische und Rehabilitative Medizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Gebiet der Physikalischen und Rehabilitativen Medizin beschäftigt sich mit \"der sekundären Prävention, der interdisziplinären Diagnostik, Behandlung und Rehabilitation von körperlichen Beeinträchtigungen mittels konservativen, physikalischen, manuellen und naturheilkundlichen Verfahren\". (Facharzt Weiterbildungsordnung)&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "PSYC",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Psychiatrie und Psychotherapie",
+              "level": "0",
+              "type": "S",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Psychiatrie und Psychotherapie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Psychiatrie beschäftigt sich mit Prävention, Diagnostik und Therapie psychischer Erkrankungen.&lt;br/&gt;Mit Psychotherapie bezeichnet man die Tätigkeit, welche zur Erkennung und Therapie von geistig-seelisch bedingten, dysfunktionalen Zuständen eines Patienten durchgeführt wird. "
+                }
+              ]
+            },
+            {
+              "code": "FPSY",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Forensische Psychiatrie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Forensische Psychiatrie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Forensischen Psychiatrie stellt eine Spezialisierung innerhalb der Psychiatrie dar. Das Gebiet befasst sich mit der Begutachtung und der Therapie (ggfs. inkl. Unterbringung) von psychisch kranken Straftätern sowie mit Patienten, welche unter Drogeneinfluss ein strafrechtlich relevantes Delikt begingen.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "PSYM",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Psychosomatische Medizin und Psychotherapie",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Psychosomatische Medizin und Psychotherapie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Psychosomatischen Medizin und Psychotherapie beschäftigt sich mit der Prävention, der Erkennung, der psychotherapeutischen Behandlung sowie der Rehabilitation von Erkrankungen, deren Ursachen psychosozialer und psychosomatischer Natur sind.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "RADI",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Radiologie",
+              "level": "0",
+              "type": "S",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Radiologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Radiologie umfasst alle Bereiche der Bildgebung zu diagnostischen und therapeutischen Zwecken.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "KRAD",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Kinderradiologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Kinderradiologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Kinderradiologie stellt eine Spezialisierung der Radiologie dar. Das Gebiet beschäftigt mit der radiologischen Bildgebung beim Kind und beim Jugendlichen.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "NRAD",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Neuroradiologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Neuroradiologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Neuroradiologie stellt eine Spezialisierung der Radiologie dar. Das Gebiet beschäftigt sich mit der Sichtbarmachung von neurologischen Strukturen durch bildgebende Verfahren.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "RECH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Rechtsmedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Rechtsmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Rechtsmedizin beschäftigt sich mit  juristischen Aspekten der Medizin, insbesondere mit der Anwendung medizinischer Kenntnisse zur Beurteilung und Klärung von Rechtsfragen sowie der Vermittlung rechtlicher und ethischer Kenntnisse an die Ärzteschaft.&lt;br/&gt;&lt;i&gt;Nutzungshinweis: Falls die forensische Toxikologie organisatorisch als Teil der\n                            Rechtsmedizin (und nicht als Teil der Toxikologie) geführt wird, deckt dieses Konzept auch die forensische Toxikologie ab.&lt;/i&gt;"
+                }
+              ]
+            },
+            {
+              "code": "SCHL",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Schlafmedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Schlafmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Schlafmedizin beschäftigt sich mit Diagnostik und Therapie von Schlafstörungen.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "SPOR",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Sport- und Bewegungsmedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Sport- und Bewegungsmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Sportmedizin beschäftigt sich mit der Prävention, Diagnostik, Therapie und Rehabilitation mit sportlicher Betätigung assoziierten Erkrankungen.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "STRA",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Strahlentherapie",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Strahlentherapie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Strahlentherapie beschäftigt sich mit  der Anwendung von ionisierender Strahlung bei Menschen und Tieren, um Krankheiten zu heilen oder deren Fortschreiten zu verzögern.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "TRAN",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Transfusionsmedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Transfusionsmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Transfusionsmedizin beschäftigt sich mit allen Fragen zu Bluttransfusionen im weitesten Sinne. Insbesondere gehören dazu die Auswahl und medizinische Betreuung von Blutspendern sowie die Unterhaltung von Blutbanken und die damit verbundene Bereitstellung von Blutkonserven für die medizinischen Fachgebiete. Das Konzept umfasst auch die\n                            Transplantationsimmunologie.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "TROP",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Tropen-/Reisemedizin",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Tropen-/Reisemedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Tropenmedizin beschäftigt sich mit der Epidemiologie, Prävention, Diagnostik und Therapie/Bekämpfung von Tropenerkrankungen.&lt;br/&gt;Das Fachgebiet der Reisemedizin beschäftigt sich mit allen Fragen, welche bei der Erforschung und Bekämpfung von Erkrankungen, die im Rahmen von Reisen entstehen können, auftreten. Insbesondere die Prävention\n                        vor diesen Erkrankungen gehört zu der Reisemedizin. "
+                }
+              ]
+            },
+            {
+              "code": "UROL",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Urologie",
+              "level": "0",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Urologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Urologie beschäftigt sich mit der Prävention, Diagnose und Therapie von Erkrankungen der Niere, der ableitenden Harnwege und der männlichen Geschlechtsorgane.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "MZKH",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Zahnmedizin",
+              "level": "0",
+              "type": "S",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Zahnmedizin"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Zahnmedizin ist die Kurzform für das Fachgebiet der Zahn-, Mund- und Kieferheilkunde. Das Fachgebiet beinhaltet die Prävention, Diagnostik und Therapie von Erkrankungen im Zahn-, Mund- und Kieferbereich.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "ORAL",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Oralchirurgie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Oralchirurgie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Oralchirurgie stellt eine Spezialisierung innerhalb der Zahnmedizin dar. Das Gebiet beinhaltet die operative Versorgung sämtlicher Erkrankungen, Verletzungen oder Fehlstellungen im Bereich der Mundhöhle, des Zahnapparates, des Zahnhalteapparates und des Zahnfleischs.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "KIEF",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Kieferorthopädie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Kieferorthopädie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Kieferorthopädie stellt eine Spezialisierung innerhalb der Zahnmedizin dar. Das Gebiet beinhaltet die Prophylaxe, Diagnostik und Therapie von Fehlstellungen der Kiefer und der Zähne.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "PARO",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.4",
+              "displayName": "Parodontologie",
+              "level": "1",
+              "type": "L",
+              "designation": [
+                {
+                  "language": "de-DE",
+                  "type": "preferred",
+                  "displayName": "Parodontologie"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "&lt;span style=\"color: rgb(33, 33, 33); font-family: Calibri, sans-serif; font-size: 14.6667px;\"&gt;Das Fachgebiet Parodontologie  stellt eine Weiterbildung innerhalb der Zahnmedizin im Kammergebiet Westfalen-Lippe dar. Das Fachgebiet beinhaltet die Prävention, die Diagnostik, die Therapie und Nachsorge von Erkrankungen parodontaler und periimplantärer Gewebe\n                            und Strukturen.&lt;/span&gt;"
+                }
+              ]
+            },
+            {
+              "code": "ERG",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Ergotherapie",
+              "level": "0",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Ergotherapie unterstützt und begleitet Menschen jeden Alters, die in ihrer Handlungsfähigkeit eingeschränkt oder von Einschränkung bedroht sind. Ziel ist, sie bei der Durchführung für sie bedeutungsvoller Betätigungen in den Bereichen Selbstversorgung, Produktivität und Freizeit in ihrer persönlichen Umwelt zu stärken.&lt;br/&gt;Hierbei dienen spezifische\n                        Aktivitäten, Umweltanpassung und Beratung dazu, dem Menschen Handlungsfähigkeit im Alltag, gesellschaftliche Teilhabe und eine Verbesserung seiner Lebensqualität zu ermöglichen. (Definition vom \"Deutschen Verband der Ergotherapeuten e.V.\")&lt;br/&gt;Typischerweise werden Dokumente, die von Angehörigen der folgenden Berufsgruppen erstellt werden, mit diesem Code versehen:&lt;br/&gt;*\n                        Ergotherapeutin/ Ergotherapeut"
+                }
+              ]
+            },
+            {
+              "code": "ERN",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Ernährung und Diätetik",
+              "level": "0",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Fachgebiet der Ernährung und Diätetik deckt die Tätigkeiten folgender Berufe ab:&lt;br clear=\"none\"/&gt;* Diätassistentin/ Diätassistent&lt;br clear=\"none\"/&gt;* Diätköchin/ Diätkoch&lt;br clear=\"none\"/&gt;* Ernährungsberaterin/ Ernährungsberater&lt;br clear=\"none\"/&gt;* Oekotrophologin/ Oekotrophologe&lt;br clear=\"none\"/&gt;* Diabetesassistentin/ Diabetesassistent&lt;br clear=\"none\"/&gt;* Diabetesberaterin/ Diabetesberater "
+                }
+              ]
+            },
+            {
+              "code": "FOR",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Forschung",
+              "level": "0",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das  Konzept der Forschung deckt die Tätigkeiten folgender Berufe ab:&lt;br clear=\"none\"/&gt;* Clinical Trial Manager&lt;br clear=\"none\"/&gt;* Fachwissenschaftler/-innen in der Medizin&lt;br clear=\"none\"/&gt;* Klinischer Monitor&lt;br clear=\"none\"/&gt;* Studienassistentin/ Studienassistent&lt;br clear=\"none\"/&gt;* Study Nurse"
+                }
+              ]
+            },
+            {
+              "code": "PFL",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Pflege und Betreuung",
+              "level": "0",
+              "type": "S",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Pflege umfasst die eigenverantwortliche Versorgung und Betreuung, allein oder in Kooperation mit anderen Berufsangehörigen, von Menschen aller Altersgruppen, von Familien oder Lebensgemeinschaften, sowie von Gruppen und sozialen Gemeinschaften, ob krank oder gesund, in allen Lebenssituationen (Settings). Pflege schließt die Förderung der Gesundheit,\n                        Verhütung von Krankheiten und die Versorgung und Betreuung kranker, behinderter und sterbender Menschen ein. Weitere Schlüsselaufgaben der Pflege sind Wahrnehmung der Interessen und Bedürfnisse (Advocacy), Förderung einer sicheren Umgebung, Forschung, Mitwirkung in der Gestaltung der Gesundheitspolitik sowie im Management des Gesundheitswesens und in der Bildung.\n                        (Definition der Pflege vom \"International Council of Nurses ICN\" übersetzt vom Deutschen Berufsverband für Pflegeberufe) &lt;br clear=\"none\"/&gt;Das Konzept deckt die Tätigkeiten folgender Berufe ab: Pflegeassistent / Alltagsbetreuer (m/w) Servicehelfer im Sozial- und Gesundheitswesen (m/w) Wundexperte (m/w) Stomatherapeutin/ Stomatherapeut Heilerziehungspflegerin/\n                        Heilerziehungspfleger Gesundheits- und Krankenpflegehelferin/ Gesundheits- und Krankenpflegehelfer Gesundheits- und Krankenpflegerin/ Gesundheits- und Krankenpfleger Gesundheits- und Pflegeassistentin/ Gesundheits- und Pflegeassistent Gesundheits- und Pflegeberaterin/ Gesundheits- und Pflegeberater Pflegesachverständige/ Pflegesachverständiger&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "ALT",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Altenpflege",
+              "level": "1",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Altenpfleger und Altenpflegehelfer pflegen und versorgen gesunde, kranke und pflegebedürftige alte Menschen. Neben den sozial-pflegerischen Aufgaben (z.B. Hilfe bei der Körperpflege und beim Essen) kommen den Altenpflegern und Altenpflegehelfern auch medizinisch-pflegerische Aufgaben zu (z.B. Unterstützung bei therapeutischen Maßnahmen der Rehabilitation\n                        oder das Ausführen ärztlicher Verordnungen wie das Wechseln von Verbänden, das Verabreichen von Medikamenten).  (Definition der Gesundheitsberichterstattung des Bundes)&lt;br/&gt;Typischerweise werden Dokumente, die von Angehörigen der folgenden Berufsgruppen erstellt werden, mit diesem Code versehen:&lt;br/&gt;* Altenpflegerin/ Altenpfleger"
+                }
+              ]
+            },
+            {
+              "code": "KIN",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Kinderpflege",
+              "level": "1",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Tätigkeitsfelder der Gesundheits- und Kinderkrankenpflege umfassen: Die Gestaltung eines Entwicklungsfördernden Umfeldes, Beratung über entsprechende Maßnahmen und Gesundheitsaufklärung, Entlastung der pflegenden Angehörigen, physische und psychische Betreuung, Entwicklung von Krankheitskonzepten, Unterstützung bei der Teilnahme am gesellschaftlichen\n                        Leben und Gutachtertätigkeit. (Definition vom Berufsverband Kinderkrankenpflege Deutschland e.V.) Typischerweise werden Dokumente, die von Angehörigen der folgenden Berufsgruppen erstellt werden, mit diesem Code versehen: - Gesundheits- und Kinderkrankenpflegerin/ Gesundheits- und Kinderkrankenpfleger&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "PAT",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Patient außerhalb der Betreuung",
+              "level": "0",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Dieses Konzept kann zur Kennzeichnung der Herkunft von Dokumenten verwendet werden, die der Patient selbstständig erstellt und eingestellt hat. Zum Beispiel über ein Patientenportal oder eine Smartphone-App. Daten die vom Patienten über eine solche Lösung stellvertretend für einen Heilberufler eingestellt werden (z.B. gescannter Arztbrief, DICOMDVD)\n                        sollten nicht dieses Konzept, sondern das Konzept, welches für den Heilberufler vorgesehen ist, verwenden.&lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            },
+            {
+              "code": "PHZ",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Pharmazeutik",
+              "level": "0",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Konzept der Pharmazeutik deckt die Tätigkeiten folgender Berufe ab:&lt;br clear=\"none\"/&gt;* Pharmakantin/ Pharmakant&lt;br clear=\"none\"/&gt;* Pharmakovigilantin/ Pharmakovigilant&lt;br clear=\"none\"/&gt;* Pharmazeutisch-kaufmännische Angestellte/ Pharmazeutisch-kaufmännischer Angestellter&lt;br clear=\"none\"/&gt;* Pharmazeutisch-technische Assistentin/\n                        Pharmazeutisch-technischer Assistent &lt;br clear=\"none\"/&gt;* Apothekerin/Apotheker"
+                }
+              ]
+            },
+            {
+              "code": "POD",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Podologie",
+              "level": "0",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Podologie ist die (nicht-ärztliche) Fuß-Heilkunde und wird von Podologen/Podologinnen praktiziert."
+                }
+              ]
+            },
+            {
+              "code": "PRV",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Prävention",
+              "level": "0",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Prävention deckt die Tätigkeiten von Wellnessberatern und -beraterinnen ab; auch die Tätigkeiten von Fitnesstrainern und -trainerinnen außerhalb der medizinischen Rehabilitation oder der Sportmedizin sind durch dieses Konzept abgedeckt.&lt;br clear=\"none\"/&gt;Typischerweise werden Dokumente, die von Angehörigen der folgenden Berufsgruppen erstellt werden,\n                        mit diesem Code versehen:&lt;br clear=\"none\"/&gt;* Fitnessberaterin/ Fitnessberater&lt;br clear=\"none\"/&gt;* Fitnessmanagerin/ Fitnessmanager&lt;br clear=\"none\"/&gt;* Fitnesstrainerin/ Fitnesstrainer&lt;br clear=\"none\"/&gt;* Wellnessberaterin/ Wellnessberater&lt;br clear=\"none\"/&gt;* Wellnesstrainerin/ Wellnesstrainer"
+                }
+              ]
+            },
+            {
+              "code": "SOZ",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Sozialwesen",
+              "level": "0",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Konzept deckt die Tätigkeiten folgender Berufe ab:&lt;br clear=\"none\"/&gt;* Sozialarbeiterin / Sozialarbeiter&lt;br clear=\"none\"/&gt;* Sozialmedizinische Fachangestellte&lt;br clear=\"none\"/&gt;* Sozialpädagogin/ Sozialpädagoge&lt;br clear=\"none\"/&gt;* Sozialtherapeutin/ Sozialtherapeut&lt;br clear=\"none\"/&gt;* Compliance Coach, Adherence Coach&lt;br clear=\"none\"/&gt;Wenn die Tätigkeit\n                        des Sozialdienstes eines Krankenhauses eindeutig einem ärztlichen Fachgebiet zugeordnet werden kann, sollte dieses bevorzugt verwendet werden."
+                }
+              ]
+            },
+            {
+              "code": "SPR",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Sprachtherapie",
+              "level": "0",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Sprachtherapie deckt die Tätigkeiten folgender Berufe ab:&lt;br clear=\"none\"/&gt;* Logopädin/ Logopäde&lt;br clear=\"none\"/&gt;* Medizinische Sprachheilpädagogin/ Medizinischer Sprachheilpädagoge&lt;br clear=\"none\"/&gt;* Staatlich anerkannte Sprachtherapeutin/ Staatlich anerkannter Sprachtherapeut"
+                }
+              ]
+            },
+            {
+              "code": "VKO",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Versorgungskoordination",
+              "level": "0",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Die Versorgungskoordination deckt die Tätigkeiten von Case Managern/Case Managerinnen ab."
+                }
+              ]
+            },
+            {
+              "code": "VER",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Verwaltung",
+              "level": "0",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Das Konzept deckt die Tätigkeiten folgender Berufe ab:&lt;br clear=\"none\"/&gt;* Medizincontrollerin/ Medizincontroller&lt;br clear=\"none\"/&gt;* Sekretärin im Gesundheitswesen/ Sekretär im Gesundheitswesen &lt;br clear=\"none\"/&gt;* Sozialversicherungsfachangestellte/ Sozialversicherungsfachangestellter&lt;br clear=\"none\"/&gt;* Verwaltungsangestellte in medizinischen\n                        Pflegeeinrichtungen/ Verwaltungsangestellter in medizinischen Pflegeeinrichtungen&lt;br clear=\"none\"/&gt;Wenn diese Tätigkeiten eindeutig einem ärztlichen Fachgebiet zugeordnet werden können, sollte dieses bevorzugt verwendet werden."
+                }
+              ]
+            },
+            {
+              "code": "PST",
+              "codeSystem": "1.3.6.1.4.1.19376.3.276.1.5.5",
+              "displayName": "Psychotherapie",
+              "level": "0",
+              "type": "L",
+              "desc": [
+                {
+                  "language": "de-DE",
+                  "#text": "Psychotherapie  bezeichnet allgemein die „gezielte professionelle Behandlung seelischer &lt;span class=\"yui-non\"&gt;&lt;a class=\"\" href=\"https://de.wikipedia.org/wiki/Psychische_St%C3%B6rung\" title=\"Psychische Störung\" style=\"background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"&gt;(psychischer) Störungen&lt;/a&gt;  &lt;/span&gt;oder psychisch bedingter körperlicher Störungen mit psychologischen Mitteln. &lt;br clear=\"none\"/&gt;"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
