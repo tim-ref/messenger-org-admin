@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 akquinet GmbH
+ * Copyright (C) 2023 - 2024 akquinet GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing,
@@ -8,6 +8,7 @@
  */
 
 import React from "react";
+import { CSSTransitionProps } from "react-transition-group/CSSTransition";
 
 import {
   ArrayField,
@@ -28,6 +29,10 @@ import { serviceProvisionCodeChoices } from "../data_providers/hcs_mapper";
 const listFilters = [
   <TextInput placeholder="Name" source="name:contains" alwaysOn />,
 ];
+const TransitionProps: CSSTransitionProps = {
+  classNames: "",
+  addEndListener: () => undefined,
+};
 
 export const HcsList = props => (
   <List {...props} sort={{ field: "name", order: "ASC" }} filters={listFilters}>
@@ -64,7 +69,7 @@ export const HcsCreate = props => (
         autoComplete="off"
       />
       <ArrayInput source="endpoints">
-        <SimpleFormIterator>
+        <SimpleFormIterator TransitionProps={TransitionProps}>
           <TextInput
             label="Endpoint Name"
             source="endpoint_name"
@@ -96,7 +101,7 @@ export const HcsEdit = props => (
       <TextInput source="organization_id" disabled />
       <TextInput source="organization_name" disabled />
       <ArrayInput source="endpoints">
-        <SimpleFormIterator>
+        <SimpleFormIterator TransitionProps={TransitionProps}>
           <TextInput label="Endpoint ID" source="endpoint_id" disabled />
           <TextInput
             label="Endpoint Name"
@@ -196,8 +201,9 @@ const validateHcsForm = (form: HcsForm): HcsForm => {
     if (!form.endpoint_address) {
       epError.endpoint_address = "Address must not be empty!";
     } else {
-      if (!form.endpoint_address.match(/@.*:.*/)) {
-        epError.endpoint_address = "Address must match @name:homeserver!";
+      if (!form.endpoint_address.match(/matrix:u\/.*:.*/)) {
+        epError.endpoint_address =
+          "Address must match matrix:u/name:homeserver!";
       }
     }
     return epError;

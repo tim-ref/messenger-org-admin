@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 akquinet GmbH
+ * Copyright (C) 2023 - 2024 akquinet GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing,
@@ -63,7 +63,10 @@ describe("vzd ru integration test", () => {
 
     it("can filter", async () => {
       const endpoint_name = aString("endpoint-name");
-      const endpoint_address = `@${endpoint_name}:homeserver.com`;
+      const endpoint_address = anEndpointAddress(
+        endpoint_name,
+        "homeserver.com"
+      );
       const endpoint = await createEndpoint(endpoint_name, endpoint_address);
 
       const endpointReference = ["Endpoint/" + endpoint.id];
@@ -234,14 +237,11 @@ describe("vzd ru integration test", () => {
     it("can create and delete HealthcareService with multiple endpoints", async () => {
       const endpoint_name = aString("endpoint-name");
       const endpoint_name2 = aString("endpoint-name2");
-      const endpoint = await createEndpoint(
-        endpoint_name,
-        "@me:homeserver.com"
-      );
-      const endpoint2 = await createEndpoint(
-        endpoint_name2,
-        "@me2:homeserver.com"
-      );
+      const endpoint_address = anEndpointAddress("me", "homeserver.com");
+      const endpoint_address2 = anEndpointAddress("me2", "homeserver.com");
+
+      const endpoint = await createEndpoint(endpoint_name, endpoint_address);
+      const endpoint2 = await createEndpoint(endpoint_name2, endpoint_address2);
       const endpointReference = [
         "Endpoint/" + endpoint.id,
         "Endpoint/" + endpoint2.id,
@@ -261,11 +261,11 @@ describe("vzd ru integration test", () => {
       expect(createdHcs.endpoint).toHaveLength(2);
       expect(createdHcs.endpoint).toPartiallyContain({
         name: endpoint_name,
-        address: "@me:homeserver.com",
+        address: endpoint_address,
       });
       expect(createdHcs.endpoint).toPartiallyContain({
         name: endpoint_name2,
-        address: "@me2:homeserver.com",
+        address: endpoint_address2,
       });
 
       await deleteHCS(createdHcs.id);
@@ -378,15 +378,13 @@ describe("vzd ru integration test", () => {
 
     it("update HCS endpoints", async () => {
       const endpoint_name = aString("new name");
+      const endpoint_address = anEndpointAddress("other", "homeserver.com");
 
       const endpoint = await createEndpoint(
         aString("old name"),
-        "@me:homeserver.com"
+        anEndpointAddress()
       );
-      const endpoint2 = await createEndpoint(
-        endpoint_name,
-        "@other:homeserver.com"
-      );
+      const endpoint2 = await createEndpoint(endpoint_name, endpoint_address);
 
       const hcsName = aString("hcs-name");
 
@@ -411,7 +409,7 @@ describe("vzd ru integration test", () => {
       expect(createdHcs.endpoint).toHaveLength(1);
       expect(createdHcs.endpoint).toPartiallyContain({
         name: endpoint_name,
-        address: "@other:homeserver.com",
+        address: endpoint_address,
       });
 
       await deleteHCS(result.id);
@@ -481,12 +479,12 @@ describe("vzd ru integration test", () => {
           {
             endpoint_id: endpoint.id,
             endpoint_name: "name 1",
-            endpoint_address: "@updated1:address",
+            endpoint_address: anEndpointAddress("updated1", "address"),
           },
           {
             endpoint_id: endpoint2.id,
             endpoint_name: "name 2",
-            endpoint_address: "@updated2:address",
+            endpoint_address: anEndpointAddress("updated2", "address"),
           },
         ],
       });
@@ -500,13 +498,13 @@ describe("vzd ru integration test", () => {
       expect(updated[0].endpoint).toPartiallyContain({
         id: endpoint.id,
         name: "name 1",
-        address: "@updated1:address",
+        address: anEndpointAddress("updated1", "address"),
       });
 
       expect(updated[0].endpoint).toPartiallyContain({
         id: endpoint2.id,
         name: "name 2",
-        address: "@updated2:address",
+        address: anEndpointAddress("updated2", "address"),
       });
 
       await deleteHCS(hcs.id);
@@ -562,7 +560,7 @@ describe("vzd ru integration test", () => {
     it("can find endpoint by id", async () => {
       const endpoint = await createEndpoint(
         aString("endpoint name"),
-        "@me:homeserver.com"
+        anEndpointAddress("me", "homeserver")
       );
       await expect(findEndpointById(endpoint.id)).resolves.toBeTruthy();
 
@@ -573,13 +571,11 @@ describe("vzd ru integration test", () => {
 
     it("can update endpoint", async () => {
       const endpoint_name = aString("endpoint-name");
-      const endpoint = await createEndpoint(
-        endpoint_name,
-        "@me:homeserver.com"
-      );
+      const endpoint_address = anEndpointAddress("me", "homeserver.com");
+      const endpoint = await createEndpoint(endpoint_name, endpoint_address);
 
       const name = aString("new-name");
-      const address = aString("new-adr");
+      const address = anEndpointAddress("new", "homeserver.com");
 
       const updatedEndpoint = await updateEndpoint({
         id: endpoint.id,
