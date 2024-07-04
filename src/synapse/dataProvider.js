@@ -1,5 +1,5 @@
 /*
- * Modified by akquinet GmbH on 16.10.2023
+ * Modified by akquinet GmbH on 26.06.2024
  *
  * Originally forked https://github.com/Awesome-Technologies/synapse-admin
  *
@@ -17,9 +17,8 @@
  * limitations under the License.
  */
 
-import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
-import { rawDataHeader } from "../raw-data-header";
+import { fetchJsonWithRawDataHeader } from "../raw-data-header";
 
 // Adds the access token to all requests
 const jsonClient = (url, options = {}) => {
@@ -31,14 +30,7 @@ const jsonClient = (url, options = {}) => {
     };
   }
 
-  if (!options.headers) {
-    options.headers = new Headers();
-  }
-
-  // console.warn("Not setting useragent until CORS issue is solved");
-  options.headers.set("Useragent", rawDataHeader);
-
-  return fetchUtils.fetchJson(url, options);
+  return fetchJsonWithRawDataHeader(url, options);
 };
 
 const mxcUrlToHttp = mxcUrl => {

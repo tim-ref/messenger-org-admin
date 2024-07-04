@@ -1,5 +1,5 @@
 /*
- * Modified by akquinet GmbH on 16.10.2023
+ * Modified by akquinet GmbH on 26.06.2024
  *
  * Originally forked https://github.com/Awesome-Technologies/synapse-admin
  *
@@ -19,7 +19,6 @@
 
 import React, { useState, useEffect } from "react";
 import {
-  fetchUtils,
   FormDataConsumer,
   Notification,
   useLogin,
@@ -43,6 +42,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import LockIcon from "@material-ui/icons/Lock";
+import { fetchJsonWithRawDataHeader } from "../raw-data-header";
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -220,8 +220,7 @@ const LoginPage = ({ theme }) => {
       const wellKnownUrl = `https://${home_server}/.well-known/matrix/client`;
       if (home_server) {
         // fetch .well-known entry to get base_url
-        fetchUtils
-          .fetchJson(wellKnownUrl, { method: "GET" })
+        fetchJsonWithRawDataHeader(wellKnownUrl, { method: "GET" })
           .then(({ json }) => {
             form.change("base_url", json["m.homeserver"].base_url);
           })
@@ -240,8 +239,7 @@ const LoginPage = ({ theme }) => {
         )
           return;
         const versionUrl = `${formData.base_url}/_synapse/admin/v1/server_version`;
-        fetchUtils
-          .fetchJson(versionUrl, { method: "GET" })
+        fetchJsonWithRawDataHeader(versionUrl, { method: "GET" })
           .then(({ json }) => {
             setServerVersion(
               `${translate("synapseadmin.auth.server_version")} ${
@@ -257,8 +255,7 @@ const LoginPage = ({ theme }) => {
         const authMethodUrl = `${formData.base_url}/_matrix/client/v3/login`;
         let supportPass = false,
           supportSSO = false;
-        fetchUtils
-          .fetchJson(authMethodUrl, { method: "GET" })
+        fetchJsonWithRawDataHeader(authMethodUrl, { method: "GET" })
           .then(({ json }) => {
             json.flows.forEach(f => {
               if (f.type === "m.login.password") {

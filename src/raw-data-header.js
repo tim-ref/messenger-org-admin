@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 akquinet GmbH
+ * Copyright (C) 2023-2024 akquinet GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing,
@@ -7,26 +7,20 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-// https://wiki.akquinet.de/pages/viewpage.action?spaceKey=130009&title=Logging+und+Reporting#LoggingundReporting-Rohdaten-Performance-Reporting(Rohdatenerfassungv.02)
+// based on gemSpec Perf, PTV 1.1.2-0
+import { fetchUtils } from "react-admin";
 
-import { currentConfig } from "./config";
+const osVersion = navigator.userAgentData?.platform ?? navigator.platform;
+const clientId = "GEMakquiTIMhaf3Q2ssR"; //set by idp registration
 
-const produktTypVersion = "TODO";
-const produktVersion = process.env.REACT_APP_VERSION;
-const auspraegung = "Org-Admin-Client";
-const plattform = "web";
-const os = navigator.userAgentData?.platform;
-const osVersion = navigator.platform;
-const clientId = "TIMREF";
-const matrixDomain = currentConfig.mxDomain;
+export const rawDataHeader = [clientId, osVersion].join(", ");
 
-export const rawDataHeader = [
-  produktTypVersion,
-  produktVersion,
-  auspraegung,
-  plattform,
-  os,
-  osVersion,
-  clientId,
-  matrixDomain,
-].join(",");
+export function fetchJsonWithRawDataHeader(url, options = {}) {
+  if (!options.headers) {
+    options.headers = new Headers();
+  }
+
+  options.headers.set("X-TIM-User-Agent", rawDataHeader);
+
+  return fetchUtils.fetchJson(url, options);
+}

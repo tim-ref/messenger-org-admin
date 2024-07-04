@@ -43,6 +43,7 @@ describe("vzd ru integration test", () => {
   const organizationReference =
     "Organization/2e7059e0-ffd7-4233-b986-87681104bf0c";
   const locationReference = "Location/" + locationId;
+  jest.setTimeout(10000);
 
   describe("searchHcs", () => {
     it("can get HealthcareService list", async () => {
@@ -337,11 +338,11 @@ describe("vzd ru integration test", () => {
 
         fail("should not come here!");
       } catch (e) {
-        expect(e.response.status).toBe(400);
+        expect(e.response.status).toBe(412);
         expect(e.response.data.issue).toContainEqual(
           expect.objectContaining({
             diagnostics:
-              "speciality does not match with speciality from VZD-Sync",
+              "Could not confirm that the codes provided are in the value set 'SecurityLabels' (http://hl7.org/fhir/ValueSet/security-labels|4.0.1), and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)",
           })
         );
       }

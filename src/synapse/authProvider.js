@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { fetchUtils } from "react-admin";
+import { fetchJsonWithRawDataHeader } from "../raw-data-header";
 
 const authProvider = {
   // called when the user attempts to log in
@@ -57,12 +57,14 @@ const authProvider = {
     const decoded_base_url = window.decodeURIComponent(base_url);
     const login_api_url = decoded_base_url + "/_matrix/client/v3/login";
 
-    return fetchUtils.fetchJson(login_api_url, options).then(({ json }) => {
-      localStorage.setItem("home_server", json.home_server);
-      localStorage.setItem("user_id", json.user_id);
-      localStorage.setItem("access_token", json.access_token);
-      localStorage.setItem("device_id", json.device_id);
-    });
+    return fetchJsonWithRawDataHeader(login_api_url, options).then(
+      ({ json }) => {
+        localStorage.setItem("home_server", json.home_server);
+        localStorage.setItem("user_id", json.user_id);
+        localStorage.setItem("access_token", json.access_token);
+        localStorage.setItem("device_id", json.device_id);
+      }
+    );
   },
   // called when the user clicks on the logout button
   logout: () => {
@@ -79,7 +81,7 @@ const authProvider = {
     };
 
     if (typeof access_token === "string") {
-      fetchUtils.fetchJson(logout_api_url, options).then(({ json }) => {
+      fetchJsonWithRawDataHeader(logout_api_url, options).then(({ json }) => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("owner");
       });
