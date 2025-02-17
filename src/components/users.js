@@ -1,5 +1,5 @@
 /*
- * Modified by akquinet GmbH on 16.10.2023
+ * Modified by akquinet GmbH on 10.12.2024
  *
  * Originally forked https://github.com/Awesome-Technologies/synapse-admin
  *
@@ -29,45 +29,45 @@ import PersonPinIcon from "@material-ui/icons/PersonPin";
 import SettingsInputComponentIcon from "@material-ui/icons/SettingsInputComponent";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import {
-  ArrayInput,
   ArrayField,
+  ArrayInput,
+  BooleanField,
+  BooleanInput,
+  BulkDeleteButton,
   Button,
+  Create,
+  CreateButton,
   Datagrid,
   DateField,
-  Create,
+  DeleteButton,
   Edit,
-  List,
+  ExportButton,
   Filter,
-  Toolbar,
+  FormTab,
+  List,
+  maxLength,
+  NumberField,
+  Pagination,
+  PasswordInput,
+  ReferenceField,
+  ReferenceManyField,
+  regex,
+  required,
+  sanitizeListRestProps,
+  SaveButton,
+  SearchInput,
+  SelectInput,
   SimpleForm,
   SimpleFormIterator,
   TabbedForm,
-  FormTab,
-  BooleanField,
-  BooleanInput,
-  PasswordInput,
   TextField,
   TextInput,
-  ReferenceField,
-  ReferenceManyField,
-  SearchInput,
-  SelectInput,
-  BulkDeleteButton,
-  DeleteButton,
-  SaveButton,
-  maxLength,
-  regex,
-  required,
-  useTranslate,
-  Pagination,
-  CreateButton,
-  ExportButton,
+  Toolbar,
   TopToolbar,
-  sanitizeListRestProps,
-  NumberField,
+  useTranslate,
 } from "react-admin";
 import { Link } from "react-router-dom";
-import { ServerNoticeButton, ServerNoticeBulkButton } from "./ServerNotices";
+import { ServerNoticeBulkButton, ServerNoticeButton } from "./ServerNotices";
 import { DeviceRemoveButton } from "./devices";
 import { ProtectMediaButton, QuarantineMediaButton } from "./media";
 import { makeStyles } from "@material-ui/core/styles";
@@ -225,14 +225,14 @@ export const UserList = props => {
   );
 };
 
-// https://matrix.org/docs/spec/appendices#user-identifiers
+// https://spec.matrix.org/v1.11/appendices/#user-identifiers
 // here only local part of user_id
 // maxLength = 255 - "@" - ":" - localStorage.getItem("home_server").length
 // localStorage.getItem("home_server").length is not valid here
 const validateUser = [
   required(),
   maxLength(253),
-  regex(/^[a-z0-9._=\-/]+$/, "synapseadmin.users.invalid_user_id"),
+  regex(/^[a-z0-9._=\-/+]+$/, "synapseadmin.users.invalid_user_id"),
 ];
 
 const validateAddress = [required(), maxLength(255)];

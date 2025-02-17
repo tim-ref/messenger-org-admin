@@ -48,6 +48,7 @@ For deployment to RU: Select the pipeline of the last commit on develop branch a
 
   ```json
   {
+    "HOME_SERVER_URL": "https://your-homeserver.dev",
     "ORG_ADMIN_USERNAME": "REDACTED",
     "ORG_ADMIN_PASSWORD": "REDACTED"
   }

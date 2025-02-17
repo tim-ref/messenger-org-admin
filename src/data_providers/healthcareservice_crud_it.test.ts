@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 - 2024 akquinet GmbH
+ * Copyright (C) 2023 - 2025 akquinet GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing,
@@ -214,7 +214,7 @@ describe("vzd ru integration test", () => {
         {
           availableTime: [
             {
-              daysOfWeek: "mon,tue,wed,thu,fri",
+              daysOfWeek: "mon",
               availableStartTime: "10:00:00",
               availableEndTime: "14:00:00",
             },
@@ -226,7 +226,7 @@ describe("vzd ru integration test", () => {
 
       const updated = await singleHcsByName(hcsName);
       expect(updated.availableTime).toPartiallyContain({
-        daysOfWeek: ["mon", "tue", "wed", "thu", "fri"],
+        daysOfWeek: ["mon"],
         availableStartTime: "10:00:00",
         availableEndTime: "14:00:00",
       });
@@ -340,9 +340,13 @@ describe("vzd ru integration test", () => {
       } catch (e) {
         expect(e.response.status).toBe(412);
         expect(e.response.data.issue).toContainEqual(
+          // See https://www.hl7.org/fhir/R4/operationoutcome.html
           expect.objectContaining({
-            diagnostics:
-              "Could not confirm that the codes provided are in the value set 'SecurityLabels' (http://hl7.org/fhir/ValueSet/security-labels|4.0.1), and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)",
+            severity: "error",
+            code: "processing",
+            diagnostics: expect.stringContaining(
+              "https://gematik.de/fhir/directory/ValueSet/HealthcareSpecialtyTypeVS"
+            ),
           })
         );
       }

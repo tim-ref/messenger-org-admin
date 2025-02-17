@@ -1,4 +1,4 @@
-###
+### Step 1: login
 POST http://localhost:8083/_matrix/client/v3/login
 Content-Type: application/json
 
@@ -17,7 +17,7 @@ Content-Type: application/json
     client.global.set("accessToken", response.body.access_token);
 %}
 
-###
+### Step 2: request token from homeserver
 POST http://localhost:8083/_matrix/client/v3/user/@admin:synapse/openid/request_token
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
@@ -32,7 +32,7 @@ Authorization: Bearer {{accessToken}}
     client.global.set("oidcToken", response.body.access_token);
 %}
 
-###
+### Step 3: request token from registration service (REGSERVICE_TOKEN)
 POST http://localhost:8080/backend/regservice/openid/user/%40admin%3Asynapse/requesttoken
 Content-Type: application/x-www-form-urlencoded
 
@@ -46,7 +46,7 @@ request_token={{oidcToken}}
     client.global.set("regServiceAccessToken", response.body.access_token);
 %}
 
-###
+### Step 4: request owner token from FHIR directory
 GET https://fhir-directory-ref.vzd.ti-dienste.de/owner-authenticate
 Authorization: Bearer {{regServiceAccessToken}}
 

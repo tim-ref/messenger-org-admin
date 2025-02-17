@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 akquinet GmbH
+ * Copyright (C) 2023 - 2025 akquinet GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing,
@@ -47,10 +47,8 @@ Cypress.Commands.add("createHcs", (name, endpoints, additionalArgs) => {
     endpoints.forEach(ep => {
       cy.get("button.button-add-endpoints").click();
 
-      cy.get("#endpoints\\[" + index + "\\]\\.endpoint_name").type(ep.name);
-      cy.get("#endpoints\\[" + index + "\\]\\.endpoint_address").type(
-        ep.address
-      );
+      cy.get(`#endpoints\\[${index}\\]\\.endpoint_name`).type(ep.name);
+      cy.get(`#endpoints\\[${index}\\]\\.endpoint_address`).type(ep.address);
 
       index++;
     });
@@ -108,15 +106,14 @@ Cypress.Commands.add("browserLogin", () => {
   cy.visit("http://localhost:3000");
 
   // login form
-  cy.get("input[name=base_url]").type(
-    "https://456356234001.eu.timref.akquinet.nx2.dev"
-  );
-
   const username = Cypress.env("ORG_ADMIN_USERNAME");
   cy.get("input[name=username]").type(username);
 
   const password = Cypress.env("ORG_ADMIN_PASSWORD");
   cy.get("input[name=password]").type(password);
+
+  const homeserverUrl = Cypress.env("HOME_SERVER_URL");
+  cy.get("input[name=base_url]").type(homeserverUrl);
 
   cy.get("button[type=submit]").click();
 
@@ -133,17 +130,15 @@ Cypress.Commands.add("apiLogin", () => {
 
   cy.visit("http://localhost:3000");
 
-  cy.request(
-    "POST",
-    "https://456356234001.eu.timref.akquinet.nx2.dev/_matrix/client/v3/login",
-    {
-      device_id: null,
-      initial_device_display_name: "Synapse Admin",
-      type: "m.login.password",
-      user: Cypress.env("ORG_ADMIN_USERNAME"),
-      password: Cypress.env("ORG_ADMIN_PASSWORD"),
-    }
-  ).then(response => {
+  const homeserverUrl = Cypress.env("HOME_SERVER_URL");
+  const loginUrl = `${homeserverUrl}/_matrix/client/v3/login`;
+  cy.request("POST", loginUrl, {
+    device_id: null,
+    initial_device_display_name: "Synapse Admin",
+    type: "m.login.password",
+    user: Cypress.env("ORG_ADMIN_USERNAME"),
+    password: Cypress.env("ORG_ADMIN_PASSWORD"),
+  }).then(response => {
     window.localStorage.setItem("access_token", response.body.access_token);
     cy.visit("/#/users");
   });
@@ -166,10 +161,8 @@ Cypress.Commands.add("editHcs", (hcsName, endpoints) => {
     endpoints.forEach(ep => {
       cy.get("button.button-add-endpoints").click();
 
-      cy.get("#endpoints\\[" + index + "\\]\\.endpoint_name").type(ep.name);
-      cy.get("#endpoints\\[" + index + "\\]\\.endpoint_address").type(
-        ep.address
-      );
+      cy.get(`#endpoints\\[${index}\\]\\.endpoint_name`).type(ep.name);
+      cy.get(`#endpoints\\[${index}\\]\\.endpoint_address`).type(ep.address);
 
       index++;
     });
