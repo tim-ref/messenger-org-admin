@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 - 2024 akquinet GmbH
+ * Copyright (C) 2023 - 2025 akquinet GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing,
@@ -13,18 +13,33 @@ import { CSSTransitionProps } from "react-transition-group/CSSTransition";
 import {
   ArrayField,
   ArrayInput,
+  BooleanField,
   BooleanInput,
   Create,
+  CreateProps,
   Datagrid,
   Edit,
+  EditProps,
+  FormDataConsumer,
+  FormDataConsumerRenderParams,
   List,
+  ReferenceInput,
   SelectArrayInput,
+  SelectInput,
   SimpleForm,
   SimpleFormIterator,
   TextField,
   TextInput,
+  useGetList,
+  useGetOne,
 } from "react-admin";
-import { serviceProvisionCodeChoices } from "../data_providers/hcs_mapper";
+import { serviceProvisionCodeChoices } from "../data_providers/healthcare_service_mapper";
+import {
+  connectionRefersToUser,
+  maybeAppendChatbot,
+  mxIdToUri,
+  uriToMxId,
+} from "../data_providers/healthcare_service_data_provider";
 
 const listFilters = [
   <TextInput placeholder="Name" source="name:contains" alwaysOn />,
@@ -41,9 +56,14 @@ export const HcsList = props => (
       <TextField source="name" />
       <ArrayField source="endpoints">
         <Datagrid>
-          <TextField source="endpoint_id" />
-          <TextField source="endpoint_name" />
-          <TextField source="endpoint_address" />
+          <TextField label="ID" source="endpoint_id" />
+          <TextField label="Name" source="endpoint_name" />
+          <TextField label="Adresse" source="endpoint_address" />
+          <TextField source="connectionType" />
+          <BooleanField
+            label="Versteckt vor Versicherten?"
+            source="endpoint_hide_from_insurees"
+          />
         </Datagrid>
       </ArrayField>
       <TextField source="organization_name" sortable={false} />
@@ -56,7 +76,110 @@ export const HcsList = props => (
   </List>
 );
 
-export const HcsCreate = props => (
+const connectionTypeChoices = [
+  { id: "tim", name: "TI-Messenger Endpoint" },
+  { id: "tim-fa", name: "TI-Messenger Funktionsaccount" },
+  { id: "tim-bot", name: "TI-Messenger Chatbot" },
+];
+
+// Show the associated User.displayname in disabled TextInput when tim-fa is on.
+// This preserves the old value in the form when the user toggles tim-fa and back
+// without saving in-between.
+const EndpointNameInput = ({
+  getSource,
+  scopedFormData,
+}: FormDataConsumerRenderParams) => {
+  const referingUser = connectionRefersToUser(scopedFormData?.connectionType);
+  const userId = uriToMxId(scopedFormData?.endpoint_address);
+  const { data, loading } = useGetOne("users", userId, {
+    enabled: !!userId && referingUser,
+  });
+  const displayname = loading ? "" : data?.displayname ?? "";
+  return (
+    <TextInput
+      label="Endpoint Name"
+      source={getSource("endpoint_name")}
+      disabled={referingUser}
+      format={(value: string | null) => {
+        return referingUser
+          ? maybeAppendChatbot(scopedFormData?.connectionType, displayname)
+          : value ?? "";
+      }}
+      autoComplete="off"
+      fullWidth
+    />
+  );
+};
+
+// Show endpoint address as ReferenceInput when connectionType requires user reference,
+// as TextInput otherwise (for backward-compatibility).
+const EndpointAddressInput = ({
+  scopedFormData,
+  getSource,
+}: FormDataConsumerRenderParams) => {
+  const referingUser = connectionRefersToUser(scopedFormData?.connectionType);
+
+  const sort = { field: "name", order: "ASC" };
+  const filter = { deactivated: false };
+  const { data, loading } = useGetList(
+    "users",
+    { page: 1, perPage: 1000000 },
+    sort,
+    filter,
+    { enabled: referingUser }
+  );
+
+  let users: string[];
+  if (!referingUser || loading) {
+    users = [];
+  } else {
+    users = Object.keys(data);
+  }
+
+  // Return "" when the ReferenceInput is hidden or has a value that doesn't correspond
+  // to a valid user (this can happen when the state was just toggled).
+  // Otherwise, ra-final-form would console.warn about it many times per typed
+  // character, which ultimately overfills the cypress console buffer and makes e2e
+  // tests fail.
+  const format = (value: string | null) => {
+    const mxId = uriToMxId(value);
+    return !referingUser || !users.includes(mxId) ? "" : mxId;
+  };
+  return (
+    <>
+      <ReferenceInput
+        label="Endpoint Address"
+        source={getSource("endpoint_address")}
+        reference="users"
+        sort={sort}
+        // Needs to format value to reference users id
+        format={format}
+        // Needs to parse input to be valid
+        parse={mxIdToUri}
+        fullWidth
+        filter={filter}
+        style={{ display: referingUser ? "inherit" : "none" }}
+      >
+        <SelectInput
+          id={`${getSource("endpoint_address")}_ref`}
+          // Makes input more consistent and easier for test driver
+          optionText={record => (record ? mxIdToUri(record.id) : "")}
+          fullWidth
+        />
+      </ReferenceInput>
+      <TextInput
+        id={`${getSource("endpoint_address")}_txt`}
+        label="Endpoint Address"
+        source={getSource("endpoint_address")}
+        autoComplete="off"
+        fullWidth
+        style={{ display: referingUser ? "none" : "inherit" }}
+      />
+    </>
+  );
+};
+
+export const HcsCreate = (props: CreateProps) => (
   <Create {...props}>
     <SimpleForm
       submitOnEnter={false}
@@ -67,18 +190,22 @@ export const HcsCreate = props => (
         label="Healthcareservice name"
         source="name"
         autoComplete="off"
+        fullWidth
       />
       <ArrayInput source="endpoints">
         <SimpleFormIterator TransitionProps={TransitionProps}>
-          <TextInput
-            label="Endpoint Name"
-            source="endpoint_name"
-            autoComplete="off"
+          <FormDataConsumer children={EndpointNameInput} />
+          <FormDataConsumer children={EndpointAddressInput} />
+
+          <SelectInput
+            label="Endpoint Connection Type"
+            source="connectionType"
+            choices={connectionTypeChoices}
+            fullWidth
           />
-          <TextInput
-            label="Endpoint Address"
-            source="endpoint_address"
-            autoComplete="off"
+          <BooleanInput
+            label="Verstecken vor Versicherten?"
+            source="endpoint_hide_from_insurees"
           />
         </SimpleFormIterator>
       </ArrayInput>
@@ -93,7 +220,7 @@ export const HcsCreate = props => (
   </Create>
 );
 
-export const HcsEdit = props => (
+export const HcsEdit = (props: EditProps) => (
   <Edit {...props} mutationMode="pessimistic">
     <SimpleForm validate={validateHcsForm}>
       <TextInput source="id" disabled />
@@ -103,15 +230,18 @@ export const HcsEdit = props => (
       <ArrayInput source="endpoints">
         <SimpleFormIterator TransitionProps={TransitionProps}>
           <TextInput label="Endpoint ID" source="endpoint_id" disabled />
-          <TextInput
-            label="Endpoint Name"
-            source="endpoint_name"
-            autoComplete="off"
+          <FormDataConsumer children={EndpointNameInput} />
+          <FormDataConsumer children={EndpointAddressInput} />
+          <SelectInput
+            label="Endpoint Connection Type"
+            source="connectionType"
+            choices={connectionTypeChoices}
+            defaultValue="tim"
+            fullWidth
           />
-          <TextInput
-            label="Endpoint Address"
-            source="endpoint_address"
-            autoComplete="off"
+          <BooleanInput
+            label="Verstecken vor Versicherten?"
+            source="endpoint_hide_from_insurees"
           />
         </SimpleFormIterator>
       </ArrayInput>
@@ -170,6 +300,8 @@ export const HcsEdit = props => (
 export type EndpointForm = {
   endpoint_name?: string;
   endpoint_address?: string;
+  connectionType?: "tim" | "tim-fa" | "tim-bot";
+  endpoint_hide_from_insurees?: boolean;
 };
 
 export type HcsForm = {
@@ -190,11 +322,16 @@ const validateHcsForm = (form: HcsForm): HcsForm => {
       return {
         endpoint_name: "Name must not be empty!",
         endpoint_address: "Address must not be empty!",
+        connectionType: null,
       };
     }
-
     const epError: EndpointForm = {};
-    if (!form.endpoint_name) {
+    // Skip endpoint_name validation for connectionTypes refering a user, it will be
+    // filled with User.displayname later.
+    if (
+      !form.endpoint_name &&
+      !["tim-fa", "tim-bot"].includes(form.connectionType)
+    ) {
       epError.endpoint_name = "Name must not be empty!";
     }
 

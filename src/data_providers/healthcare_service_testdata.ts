@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 akquinet GmbH
+ * Copyright (C) 2023 - 2025 akquinet GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing,
@@ -9,7 +9,8 @@
 
 export const aFhirHCSResponse = (
   name = "health care service name",
-  id = "c014695e-760f-4205-8e3b-39bdc59d5089"
+  id = "c014695e-760f-4205-8e3b-39bdc59d5089",
+  connectionTypeCode = "tim"
 ) => ({
   resourceType: "HealthcareService",
   id,
@@ -173,7 +174,7 @@ export const aFhirHCSResponse = (
       connectionType: {
         system:
           "https://gematik.de/fhir/directory/CodeSystem/EndpointDirectoryConnectionType",
-        code: "tim",
+        code: connectionTypeCode,
       },
       name: "@name:homeserver.bar",
       payloadType: [

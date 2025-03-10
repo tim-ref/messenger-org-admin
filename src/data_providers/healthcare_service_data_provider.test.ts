@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 akquinet GmbH
+ * Copyright (C) 2023 - 2025 akquinet GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing,
@@ -7,29 +7,42 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import { hcsDataProvider } from "./healthcareservice_dataprovider";
+import {
+  formatEndpoint,
+  hcsDataProvider,
+  mxIdToUri,
+  uriToMxId,
+} from "./healthcare_service_data_provider";
 import {
   countHCS,
-  createEndpoint,
   createHCS,
   deleteHCS,
   findOrganizationAndLocationId,
   searchHCS,
   updateHcsWithEndpoints,
-} from "./healthcareservice_crud";
-import { aFhirHCSResponse } from "./hcs_testdata";
+} from "./healthcare_service_crud";
+import { aFhirHCSResponse } from "./healthcare_service_testdata";
 import { aString } from "../test_data";
 import { HcsForm } from "../components/Hcs";
 import { ServiceProvisionCode } from "./fhir_types";
+import synapseDataProvider from "../synapse/dataProvider";
+import { createEndpoint } from "./endpoint_crud";
 
-jest.mock("./healthcareservice_crud", () => ({
+jest.mock("./healthcare_service_crud", () => ({
   searchHCS: jest.fn(),
   deleteHCS: jest.fn(),
   createHCS: jest.fn(),
   findOrganizationAndLocationId: jest.fn(),
-  createEndpoint: jest.fn(),
   countHCS: jest.fn(),
   updateHcsWithEndpoints: jest.fn(),
+}));
+
+jest.mock("./endpoint_crud", () => ({
+  createEndpoint: jest.fn(),
+}));
+
+jest.mock("../synapse/dataProvider", () => ({
+  getOne: jest.fn(),
 }));
 
 const searchHCSMock = searchHCS as jest.MockedFn<typeof searchHCS>;
@@ -38,6 +51,10 @@ const deleteHCSMock = deleteHCS as jest.MockedFn<typeof deleteHCS>;
 const createHCSMock = createHCS as jest.MockedFn<typeof createHCS>;
 const updateHcsWithEndpointsMock = updateHcsWithEndpoints as jest.MockedFn<
   typeof updateHcsWithEndpoints
+>;
+
+const getOneMock = synapseDataProvider.getOne as jest.MockedFn<
+  typeof synapseDataProvider.getOne
 >;
 
 const findOrganizationAndLocationIdMock =
@@ -75,6 +92,81 @@ describe("Healthcareservice Dataprovider", () => {
     createEndpointMock.mockReset();
     findOrganizationAndLocationIdMock.mockReset();
     countHCSMock.mockReset();
+    getOneMock.mockReset();
+  });
+
+  describe("tim-fa Endpoints", () => {
+    it("maps mxId ←→ uri", async () => {
+      const mxId = "@user:server.invalid";
+      expect(mxIdToUri(mxId)).toBe("matrix:u/user:server.invalid");
+      expect(uriToMxId(mxIdToUri(mxId))).toBe(mxId);
+    });
+
+    it("uses User.displayname as Endpoint.name for tim-fa and tim-bot connection types", async () => {
+      const def = await formatEndpoint({
+        endpoint_name: "default",
+        connectionType: "tim",
+      });
+      expect(def.endpoint_name).toBe("default");
+      expect(def.connectionType).toBe("tim");
+
+      await expect(
+        formatEndpoint({
+          endpoint_name: "tim-fa endpoint without address",
+          connectionType: "tim-fa",
+        })
+      ).rejects.toThrow(`tim-fa Endpoint needs an endpoint_address`);
+
+      getOneMock.mockResolvedValueOnce({
+        data: {
+          displayname: "displayname of user",
+        },
+      });
+      const timfa = await formatEndpoint({
+        endpoint_name: "should be ignored due to tim-fa",
+        endpoint_address: "matrix:u/user:server.invalid",
+        connectionType: "tim-fa",
+      });
+      expect(getOneMock).toHaveBeenCalledWith("users", {
+        id: "@user:server.invalid",
+      });
+      expect(timfa.endpoint_name).toBe("displayname of user");
+      expect(timfa.connectionType).toBe("tim-fa");
+
+      getOneMock.mockResolvedValueOnce({
+        data: {
+          displayname: "Bender",
+        },
+      });
+      const timbot1 = await formatEndpoint({
+        endpoint_name: "should be ignored due to tim-bot",
+        endpoint_address: "matrix:u/user:server.invalid",
+        connectionType: "tim-bot",
+      });
+      expect(getOneMock).toHaveBeenCalledWith("users", {
+        id: "@user:server.invalid",
+      });
+      // formatEndpoint forces (Chatbot) appendix…
+      expect(timbot1.endpoint_name).toBe("Bender (Chatbot)");
+      expect(timbot1.connectionType).toBe("tim-bot");
+
+      getOneMock.mockResolvedValueOnce({
+        data: {
+          displayname: "Bender (Chatbot)",
+        },
+      });
+      const timbot2 = await formatEndpoint({
+        endpoint_name: "should be ignored due to tim-bot",
+        endpoint_address: "matrix:u/user:server.invalid",
+        connectionType: "tim-bot",
+      });
+      expect(getOneMock).toHaveBeenCalledWith("users", {
+        id: "@user:server.invalid",
+      });
+      // …but doesn't add another appendix when already present.
+      expect(timbot2.endpoint_name).toBe("Bender (Chatbot)");
+      expect(timbot2.connectionType).toBe("tim-bot");
+    });
   });
 
   describe("create Hcs", () => {
@@ -173,10 +265,14 @@ describe("Healthcareservice Dataprovider", () => {
           {
             endpoint_name: "my endpoint name",
             endpoint_address: "my endpoint address",
+            connectionType: "tim",
+            endpoint_hide_from_insurees: false,
           },
           {
             endpoint_name: "my endpoint2 name",
             endpoint_address: "my endpoint2 address",
+            connectionType: "tim",
+            endpoint_hide_from_insurees: true,
           },
         ],
       };
@@ -189,11 +285,15 @@ describe("Healthcareservice Dataprovider", () => {
 
       expect(createEndpointMock).toHaveBeenCalledWith(
         "my endpoint name",
-        "my endpoint address"
+        "my endpoint address",
+        "tim",
+        false
       );
       expect(createEndpointMock).toHaveBeenCalledWith(
         "my endpoint2 name",
-        "my endpoint2 address"
+        "my endpoint2 address",
+        "tim",
+        true
       );
     });
   });
@@ -363,6 +463,7 @@ describe("Healthcareservice Dataprovider", () => {
           {
             endpoint_name: "Endpoint Name",
             endpoint_address: "Endpoint Address",
+            connectionType: "tim",
           },
         ],
       };
@@ -385,6 +486,7 @@ describe("Healthcareservice Dataprovider", () => {
             {
               endpoint_name: "Endpoint Name",
               endpoint_address: "Endpoint Address",
+              connectionType: "tim",
             },
           ],
         },

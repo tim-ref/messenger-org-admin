@@ -1,5 +1,5 @@
 /*
- * Modified by akquinet GmbH on 16.10.2023
+ * Modified by akquinet GmbH on 04.03.2025
  *
  * Originally forked https://github.com/Awesome-Technologies/synapse-admin
  *
@@ -45,7 +45,7 @@ import germanMessages from "./i18n/de";
 import englishMessages from "./i18n/en";
 import chineseMessages from "./i18n/zh";
 import { combineDataProviders } from "./combine_data_providers";
-import { hcsDataProvider } from "./data_providers/healthcareservice_dataprovider";
+import { hcsDataProvider } from "./data_providers/healthcare_service_data_provider";
 import { HcsCreate, HcsEdit, HcsList } from "./components/Hcs";
 
 // TODO: Can we use lazy loading together with browser locale?

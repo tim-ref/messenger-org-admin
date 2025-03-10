@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 akquinet GmbH
+ * Copyright (C) 2023 - 2025 akquinet GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing,
@@ -8,8 +8,27 @@
  */
 
 import { FhirResource } from "fhir-kit-client";
+import { Extension } from "./fhir/extensions";
+import { Coding } from "./fhir/codings";
 
 export type FhirResourceWithId = FhirResource & { id: string };
+
+type BundleEntry = {
+  readonly resource?: FhirResourceWithId;
+};
+
+type BundleLink = {
+  readonly relation: string;
+};
+
+// See https://hl7.org/fhir/R4/bundle.html
+export type Bundle = {
+  readonly resourceType: "Bundle";
+  readonly type: string;
+  readonly total?: number;
+  readonly link?: BundleLink[];
+  readonly entry?: BundleEntry[];
+};
 
 // http://hl7.org/fhir/valueset-service-provision-conditions.html
 export enum ServiceProvisionCode {
@@ -34,8 +53,18 @@ export type Telecom = {
   use: string;
 };
 
+// https://gematik.de/fhir/directory/CodeSystem/EndpointDirectoryConnectionType
+export type EndpointConnectionType = Coding;
+
 // http://hl7.org/fhir/endpoint.html
-type Endpoint = { id: string; name?: string; address: string };
+// See https://www.hl7.org/fhir/R4/extensibility.html
+export type Endpoint = {
+  readonly id: string;
+  name?: string;
+  address: string;
+  connectionType: EndpointConnectionType;
+  extension?: Extension[];
+};
 
 // availableTime/notAvailable sind orientiert an http://hl7.org/fhir/metadatatypes.html#Availability
 
@@ -46,15 +75,6 @@ type Endpoint = { id: string; name?: string; address: string };
  */
 
 export type DayOfWeek = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
-export enum DayOfWeekSelection {
-  mon = "mon",
-  tue = "tue",
-  wed = "wed",
-  thu = "thu",
-  fri = "fri",
-  sat = "sat",
-  sun = "sun",
-}
 
 export type AvailableTimeInternal = {
   daysOfWeek?: string;

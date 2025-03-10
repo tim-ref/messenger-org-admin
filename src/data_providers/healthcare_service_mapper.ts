@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 akquinet GmbH
+ * Copyright (C) 2023 - 2025 akquinet GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing,
@@ -7,25 +7,36 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
+import isEqual from "lodash/fp/isEqual";
 import {
   AvailableTime,
   CodableConcept,
+  Endpoint,
   FhirResourceWithId,
   ServiceProvisionCode,
 } from "./fhir_types";
+import { EndpointVisibility } from "./fhir/extensions";
 
 export type CreateHcsRequest = {
   name: string;
-  endpoints: [{ endpoint_name: string; endpoint_address: string }];
+  endpoints?: [EndpointView];
 };
 
+type EndpointView = {
+  endpoint_name: string;
+  endpoint_address: string;
+  connectionType: string;
+  endpoint_hide_from_insurees: boolean;
+};
+type SavedEndpointView = EndpointView & { endpoint_id: string };
+
 // our view representation of a HCS with multiple endpoints
-export type ViewHcs = {
+type ViewHcs = {
   id: string;
   name: string;
   organization_name: string;
   organization_id: string;
-  endpoints: { endpoint_name: string; endpoint_address: string }[];
+  endpoints: [SavedEndpointView];
 
   // Indices der selektierten Enum ServiceProvisionCode
   serviceProvisionCode: number[];
@@ -46,13 +57,9 @@ export const mapFhirHcsToViewHcs = (hcs: FhirResourceWithId): ViewHcs => {
     name: hcs.name,
     organization_name: hcs.providedBy.name,
     organization_id: hcs.providedBy.id,
-    endpoints: (hcs.endpoint ?? []).map(ep => ({
-      endpoint_id: ep.id,
-      endpoint_name: ep.name,
-      endpoint_address: ep.address,
-    })),
+    endpoints: hcs.endpoint?.map(mapFhirEndpointToViewEndpoint) ?? [],
     serviceProvisionCode: (hcs.serviceProvisionCode ?? []).map(
-      fhirServiceProvisionCodeToView
+      mapFhirServiceProvisionCodeToView
     ),
     appointmentRequired: hcs.appointmentRequired ?? false,
     communication: (hcs.communication ?? []).map(it => ({
@@ -73,12 +80,24 @@ export const mapFhirHcsToViewHcs = (hcs: FhirResourceWithId): ViewHcs => {
   };
 };
 
+function mapFhirEndpointToViewEndpoint(endpoint: Endpoint): SavedEndpointView {
+  return {
+    endpoint_id: endpoint.id,
+    endpoint_name: endpoint.name,
+    endpoint_address: endpoint.address,
+    connectionType: endpoint.connectionType.code,
+    endpoint_hide_from_insurees:
+      endpoint.extension?.some(isEqual(EndpointVisibility.hideVersicherte)) ===
+      true,
+  };
+}
+
 // "cost"  => 0
 const serviceProvisionCodeIndexByEnumMap = new Map(
   Object.values(ServiceProvisionCode).map((code, index) => [code, index])
 );
 
-const fhirServiceProvisionCodeToView = (e: CodableConcept) => {
+const mapFhirServiceProvisionCodeToView = (e: CodableConcept) => {
   if (e.coding.length !== 1) {
     console.warn("unexpected coding length!");
   }

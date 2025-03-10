@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 - 2024 akquinet GmbH
+ * Copyright (C) 2023 - 2025 akquinet GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing,
@@ -7,9 +7,19 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
+import { EndpointConnectionType } from "./data_providers/fhir_types";
+
 export const aString = (prefix = "astring"): string => {
   return `${prefix}-${Math.random()}`;
 };
 
 export const anEndpointAddress = (user = aString(), server = aString()) =>
   `matrix:u/${user}:${server}`;
+
+export const anEndpointConnectionType = (
+  code: string
+): EndpointConnectionType => ({
+  system:
+    "https://gematik.de/fhir/directory/CodeSystem/EndpointDirectoryConnectionType",
+  code: code,
+});

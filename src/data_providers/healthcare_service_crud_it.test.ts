@@ -9,24 +9,34 @@
 
 import {
   countHCS,
-  createEndpoint,
   createHCS,
-  deleteEndpoint,
   deleteHCS,
-  findEndpointById,
   findOrganizationAndLocationId,
   searchHCS,
-  updateEndpoint,
   updateHCS,
   updateHcsWithEndpoints,
-} from "./healthcareservice_crud";
+} from "./healthcare_service_crud";
 import { getOwnerToken } from "./get_owner_token.test";
-import { anEndpointAddress, aString } from "../test_data";
+import {
+  anEndpointAddress,
+  anEndpointConnectionType,
+  aString,
+} from "../test_data";
+import {
+  createEndpoint,
+  deleteEndpoint,
+  findEndpointById,
+} from "./endpoint_crud";
+import { EndpointVisibility } from "./fhir/extensions";
 import {
   HealthcareService,
   ServiceProvisionCode,
   Specialty,
 } from "./fhir_types";
+
+jest.mock("../synapse/dataProvider", () => ({
+  getOne: jest.fn(),
+}));
 
 const process_before = process.env;
 beforeAll(async () => {
@@ -68,7 +78,13 @@ describe("vzd ru integration test", () => {
         endpoint_name,
         "homeserver.com"
       );
-      const endpoint = await createEndpoint(endpoint_name, endpoint_address);
+      const endpoint_hide_from_insurees = false;
+      const endpoint = await createEndpoint(
+        endpoint_name,
+        endpoint_address,
+        undefined,
+        endpoint_hide_from_insurees
+      );
 
       const endpointReference = ["Endpoint/" + endpoint.id];
       const hcsName = aString("hcs-name");
@@ -240,9 +256,21 @@ describe("vzd ru integration test", () => {
       const endpoint_name2 = aString("endpoint-name2");
       const endpoint_address = anEndpointAddress("me", "homeserver.com");
       const endpoint_address2 = anEndpointAddress("me2", "homeserver.com");
+      const endpoint_hide_from_insurees1 = false;
+      const endpoint_hide_from_insurees2 = true;
 
-      const endpoint = await createEndpoint(endpoint_name, endpoint_address);
-      const endpoint2 = await createEndpoint(endpoint_name2, endpoint_address2);
+      const endpoint = await createEndpoint(
+        endpoint_name,
+        endpoint_address,
+        undefined,
+        endpoint_hide_from_insurees1
+      );
+      const endpoint2 = await createEndpoint(
+        endpoint_name2,
+        endpoint_address2,
+        "tim-fa",
+        endpoint_hide_from_insurees2
+      );
       const endpointReference = [
         "Endpoint/" + endpoint.id,
         "Endpoint/" + endpoint2.id,
@@ -259,14 +287,17 @@ describe("vzd ru integration test", () => {
 
       const createdHcs = await singleHcsByName(hcsName);
 
-      expect(createdHcs.endpoint).toHaveLength(2);
+      expect(createdHcs.endpoint).toBeArrayOfSize(2);
       expect(createdHcs.endpoint).toPartiallyContain({
         name: endpoint_name,
         address: endpoint_address,
+        connectionType: anEndpointConnectionType("tim"),
       });
       expect(createdHcs.endpoint).toPartiallyContain({
         name: endpoint_name2,
         address: endpoint_address2,
+        connectionType: anEndpointConnectionType("tim-fa"),
+        extension: [EndpointVisibility.hideVersicherte],
       });
 
       await deleteHCS(createdHcs.id);
@@ -387,9 +418,16 @@ describe("vzd ru integration test", () => {
 
       const endpoint = await createEndpoint(
         aString("old name"),
-        anEndpointAddress()
+        anEndpointAddress(),
+        undefined,
+        false
       );
-      const endpoint2 = await createEndpoint(endpoint_name, endpoint_address);
+      const endpoint2 = await createEndpoint(
+        endpoint_name,
+        endpoint_address,
+        undefined,
+        false
+      );
 
       const hcsName = aString("hcs-name");
 
@@ -411,7 +449,7 @@ describe("vzd ru integration test", () => {
 
       const createdHcs = await singleHcsByName(hcsName);
 
-      expect(createdHcs.endpoint).toHaveLength(1);
+      expect(createdHcs.endpoint).toBeArrayOfSize(1);
       expect(createdHcs.endpoint).toPartiallyContain({
         name: endpoint_name,
         address: endpoint_address,
@@ -440,10 +478,14 @@ describe("vzd ru integration test", () => {
           {
             endpoint_name: aString(),
             endpoint_address: anEndpointAddress(),
+            connectionType: "tim",
+            endpoint_hide_from_insurees: false,
           },
           {
             endpoint_name: aString(),
             endpoint_address: anEndpointAddress(),
+            connectionType: "tim-fa",
+            endpoint_hide_from_insurees: true,
           },
         ],
       });
@@ -452,6 +494,12 @@ describe("vzd ru integration test", () => {
 
       expect(updated).toHaveLength(1);
       expect(updated[0].endpoint).toHaveLength(2);
+      expect(updated[0].endpoint[0].connectionType).toStrictEqual(
+        anEndpointConnectionType("tim")
+      );
+      expect(updated[0].endpoint[1].connectionType).toStrictEqual(
+        anEndpointConnectionType("tim-fa")
+      );
 
       await deleteHCS(hcs.id);
     });
@@ -461,11 +509,15 @@ describe("vzd ru integration test", () => {
 
       const endpoint = await createEndpoint(
         aString("old name"),
-        anEndpointAddress()
+        anEndpointAddress(),
+        undefined,
+        true
       );
       const endpoint2 = await createEndpoint(
         endpoint_name,
-        anEndpointAddress()
+        anEndpointAddress(),
+        undefined,
+        false
       );
 
       const hcsName = aString("hcs-name");
@@ -485,39 +537,54 @@ describe("vzd ru integration test", () => {
             endpoint_id: endpoint.id,
             endpoint_name: "name 1",
             endpoint_address: anEndpointAddress("updated1", "address"),
+            connectionType: "tim",
+            endpoint_hide_from_insurees: false,
           },
           {
             endpoint_id: endpoint2.id,
             endpoint_name: "name 2",
             endpoint_address: anEndpointAddress("updated2", "address"),
+            connectionType: "tim-fa",
+            endpoint_hide_from_insurees: true,
           },
         ],
       });
 
       const updated = await searchHcsByName(hcs.name);
 
-      console.log("Updated", updated[0].endpoint);
-
-      expect(updated).toHaveLength(1);
-      expect(updated[0].endpoint).toHaveLength(2);
+      expect(updated).toBeArrayOfSize(1);
+      expect(updated[0].endpoint).toBeArrayOfSize(2);
       expect(updated[0].endpoint).toPartiallyContain({
         id: endpoint.id,
         name: "name 1",
         address: anEndpointAddress("updated1", "address"),
+        connectionType: anEndpointConnectionType("tim"),
       });
 
       expect(updated[0].endpoint).toPartiallyContain({
         id: endpoint2.id,
         name: "name 2",
         address: anEndpointAddress("updated2", "address"),
+        connectionType: anEndpointConnectionType("tim-fa"),
+        extension: [EndpointVisibility.hideVersicherte],
       });
 
       await deleteHCS(hcs.id);
     });
 
     it("can update HCS with deleted endpoints", async () => {
-      const endpoint = await createEndpoint(aString(), anEndpointAddress());
-      const endpoint2 = await createEndpoint(aString(), anEndpointAddress());
+      const endpoint = await createEndpoint(
+        aString(),
+        anEndpointAddress(),
+        undefined,
+        false
+      );
+      const endpoint2 = await createEndpoint(
+        aString(),
+        anEndpointAddress(),
+        undefined,
+        false
+      );
 
       const hcsName = aString("hcs-name");
 
@@ -536,6 +603,8 @@ describe("vzd ru integration test", () => {
             endpoint_id: endpoint2.id,
             endpoint_name: aString(),
             endpoint_address: anEndpointAddress(),
+            connectionType: "tim",
+            endpoint_hide_from_insurees: true,
           },
         ],
       });
@@ -559,40 +628,6 @@ describe("vzd ru integration test", () => {
     expect(result).toBeTruthy();
     expect(result.organizationId).toBeTruthy();
     expect(result.locationId).toBeTruthy();
-  });
-
-  describe("endpoints", () => {
-    it("can find endpoint by id", async () => {
-      const endpoint = await createEndpoint(
-        aString("endpoint name"),
-        anEndpointAddress("me", "homeserver")
-      );
-      await expect(findEndpointById(endpoint.id)).resolves.toBeTruthy();
-
-      await deleteEndpoint(endpoint.id);
-
-      await expect(findEndpointById(endpoint.id)).resolves.toBeFalsy();
-    });
-
-    it("can update endpoint", async () => {
-      const endpoint_name = aString("endpoint-name");
-      const endpoint_address = anEndpointAddress("me", "homeserver.com");
-      const endpoint = await createEndpoint(endpoint_name, endpoint_address);
-
-      const name = aString("new-name");
-      const address = anEndpointAddress("new", "homeserver.com");
-
-      const updatedEndpoint = await updateEndpoint({
-        id: endpoint.id,
-        name,
-        address,
-      });
-
-      expect(updatedEndpoint.name).toBe(name);
-      expect(updatedEndpoint.address).toBe(address);
-
-      await expect(deleteEndpoint(updatedEndpoint.id)).resolves.toBeUndefined();
-    });
   });
 });
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 akquinet GmbH
+ * Copyright (C) 2023 - 2025 akquinet GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing,
@@ -13,6 +13,7 @@ import { Identifier, SortPayload } from "react-admin";
 import {
   AvailableTime,
   AvailableTimeInternal,
+  Bundle,
   CodableConcept,
   DayOfWeek,
   FhirResourceWithId,
@@ -21,6 +22,12 @@ import {
   Specialty,
   Telecom,
 } from "./fhir_types";
+import { ConnectionTypes, Origin } from "./fhir/codings";
+import {
+  createEndpoint,
+  deleteEndpoint,
+  updateEndpoint,
+} from "./endpoint_crud";
 
 const parseServiceProvisionCode = (
   serviceProvisionCode?: ServiceProvisionCode[]
@@ -130,10 +137,7 @@ export const createHCS = async (
         reference: organizationReference,
       },
       meta: {
-        tag: {
-          system: "https://gematik.de/fhir/directory/CodeSystem/Origin",
-          code: "owner",
-        },
+        tag: Origin.owner,
         profile: [
           "https://gematik.de/fhir/directory/StructureDefinition/HealthcareServiceDirectory",
         ],
@@ -157,76 +161,18 @@ export const createHCS = async (
   );
 };
 
-export const createEndpoint = async (
-  name: string,
-  address: string
-): Promise<FhirResourceWithId> =>
-  await withClient(async client => {
-    return (await client.create({
-      resourceType: "Endpoint",
-      body: {
-        resourceType: "Endpoint",
-        name,
-        address,
-        status: "active",
-        meta: {
-          tag: {
-            system: "https://gematik.de/fhir/directory/CodeSystem/Origin",
-            code: "owner",
-          },
-          profile: [
-            "https://gematik.de/fhir/directory/StructureDefinition/EndpointDirectory",
-          ],
-        },
-        connectionType: {
-          code: "tim",
-          system:
-            "https://gematik.de/fhir/directory/CodeSystem/EndpointDirectoryConnectionType",
-        },
-        payloadType: [
-          {
-            coding: [
-              {
-                code: "tim-chat",
-                system:
-                  "https://gematik.de/fhir/directory/CodeSystem/EndpointDirectoryPayloadType",
-              },
-            ],
-          },
-        ],
-      },
-    })) as FhirResourceWithId;
-  });
-
 export const deleteHCS = async (id: string): Promise<void> =>
   await withClient(async client => {
     const read = await client.read({ id, resourceType: "HealthcareService" });
 
     await client.delete({ id, resourceType: "HealthcareService" });
 
-    // we prefer orphaned endpoints to broken hcs, therfor we delete the hcs first
+    // we prefer orphaned endpoints to broken hcs, therefor we delete the hcs first
     await Promise.all(
       (read.endpoint ?? [])
-        .map(endpoint => {
-          return endpoint.reference.split("/")[1];
-        })
-        .map(locationId => {
-          return deleteEndpoint(locationId);
-        })
+        .map(endpoint => endpoint.reference.split("/")[1])
+        .map((locationId: string) => deleteEndpoint(locationId))
     );
-  });
-
-export const deleteEndpoint = async (id: string): Promise<void> =>
-  await withClient(async client => {
-    try {
-      await client.delete({ id, resourceType: "Endpoint" });
-    } catch (e) {
-      if (e.response.status === 410) {
-        return;
-      } else {
-        throw e;
-      }
-    }
   });
 
 export const countHCS = async (): Promise<number> => {
@@ -261,12 +207,12 @@ export const searchHCS = async (
       ...filter,
     };
 
-    return await readPages(
+    return await extractHealthcareServicesFromSearchResults(
       client,
-      await client.resourceSearch({
+      (await client.resourceSearch({
         resourceType: "HealthcareService",
         searchParams,
-      })
+      })) as Bundle
     );
   });
 
@@ -275,15 +221,16 @@ export const findOrganizationAndLocationId = async (): Promise<{
   locationId: string;
 }> => {
   const tId = await telematikId();
-  const bundle = await withClient(async client => {
-    return await client.resourceSearch({
-      resourceType: "HealthcareService",
-      searchParams: {
-        _include: ["Organization:*", "Location:*"],
-        "organization.identifier": tId,
-      },
-    });
-  });
+  const bundle = (await withClient(
+    async client =>
+      await client.resourceSearch({
+        resourceType: "HealthcareService",
+        searchParams: {
+          _include: ["Organization:*", "Location:*"],
+          "organization.identifier": tId,
+        },
+      })
+  )) as Bundle;
   if (bundle.total === 0) {
     throw new Error(`no results for telematikId ${tId} from token`);
   }
@@ -307,28 +254,6 @@ export const findOrganizationAndLocationId = async (): Promise<{
   return { organizationId, locationId };
 };
 
-export const updateEndpoint = async (data: {
-  id: string;
-  name: string;
-  address: string;
-}): Promise<FhirResource> =>
-  await withClient(async client => {
-    const endpoint = await client.read({
-      id: data.id,
-      resourceType: "Endpoint",
-    });
-
-    return await client.update({
-      id: data.id,
-      resourceType: "Endpoint",
-      body: {
-        ...endpoint,
-        name: data.name,
-        address: data.address,
-      },
-    });
-  });
-
 export const updateHcsWithEndpoints = async (
   data: {
     id: string;
@@ -337,6 +262,8 @@ export const updateHcsWithEndpoints = async (
       endpoint_id?: string;
       endpoint_address: string;
       endpoint_name: string;
+      connectionType: ConnectionTypes;
+      endpoint_hide_from_insurees: boolean;
     }[];
   },
   optionalArgs?: OptionalCreateUpdateHcsArgs
@@ -353,18 +280,25 @@ export const updateHcsWithEndpoints = async (
   const originalHCS = hcsList[0];
 
   const updatedEndpointIds = await Promise.all(
-    data.endpoints.map(e => {
+    data.endpoints.map(async e => {
       if (e.endpoint_id) {
-        return updateEndpoint({
+        await updateEndpoint({
           id: e.endpoint_id,
           name: e.endpoint_name,
           address: e.endpoint_address,
-        }).then(() => e.endpoint_id);
+          connectionType: e.connectionType,
+          hide_from_insurees: e.endpoint_hide_from_insurees,
+        });
+        return e.endpoint_id;
       } else {
         // create new endpoint
-        return createEndpoint(e.endpoint_name, e.endpoint_address).then(
-          r => r.id
+        const r = await createEndpoint(
+          e.endpoint_name,
+          e.endpoint_address,
+          e.connectionType,
+          e.endpoint_hide_from_insurees
         );
+        return r.id;
       }
     })
   );
@@ -392,19 +326,6 @@ export const updateHcsWithEndpoints = async (
 
   // delete old endpoints
   await Promise.all(toBeDeletedIds.map(deleteEndpoint));
-};
-
-export const findEndpointById = async (id: string): Promise<FhirResource> => {
-  return withClient(async client => {
-    try {
-      return await client.read({
-        resourceType: "Endpoint",
-        id,
-      });
-    } catch (e) {
-      return null;
-    }
-  });
 };
 
 export const updateHCS = async (
@@ -463,10 +384,8 @@ export const updateHCS = async (
       },
     };
 
-    console.log("update request", request);
-
     const result = await client.update(request);
-    console.log("update response", result);
+    console.info(`HCS ${data.id} updated`, request, result);
   });
 };
 
@@ -480,53 +399,84 @@ const parseLocation = (locationId?: string) => {
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-async function readBundle(client: Client, bundle: any) {
-  const elements = [];
+/**
+ * Extracts HealthcareService resources from a Bundle, and fetches referenced Endpoint resources.
+ * @param client – FHIR client
+ * @param bundle
+ */
+async function extractHealthcareServicesFromBundle(
+  client: Client,
+  bundle: Bundle
+): Promise<FhirResourceWithId[]> {
+  const healthcareServices: FhirResourceWithId[] = [];
   for (const entry of bundle.entry ?? []) {
     const resource = entry.resource;
     if (resource.resourceType === "HealthcareService") {
-      elements.push(await deref(resource, client, bundle));
+      healthcareServices.push(
+        await resolveResourceReferences(resource, client, bundle)
+      );
     }
   }
-  return elements;
+  return healthcareServices;
 }
 
-async function readPages(client: Client, bundle: any) {
-  let cur = Object.assign({}, bundle);
-  const elements = await readBundle(client, bundle);
-  while (cur.link?.find((e: any) => e.relation === "next")) {
-    elements.push(...(await readBundle(client, bundle)));
-    cur = await client.nextPage({ bundle: cur });
+/**
+ * Extract/GET HealthcareService resources from a search result (searchset distributed across paged Bundles).
+ * @param client – FHIR client
+ * @param bundle - the initial searchset Bundle
+ */
+async function extractHealthcareServicesFromSearchResults(
+  client: Client,
+  bundle: Bundle
+): Promise<FhirResourceWithId[]> {
+  let pagedBundle = Object.assign({}, bundle);
+  const healthcareServices: FhirResourceWithId[] =
+    await extractHealthcareServicesFromBundle(client, bundle);
+  while (pagedBundle.link?.find((e: any) => e.relation === "next")) {
+    healthcareServices.push(
+      ...(await extractHealthcareServicesFromBundle(client, bundle))
+    );
+    pagedBundle = (await client.nextPage({ bundle: pagedBundle })) as Bundle;
   }
-  return elements;
+  return healthcareServices;
 }
 
-async function deref(resource: any, client: Client, bundle: any) {
-  const derefd = {
-    ...resource,
+/**
+ * Resolves referenced (providedBy, location, endpoint) resources in the provided HealthcareService.
+ * @param healthcareService – HealthcareService resource
+ * @param client – FHIR client
+ * @param context – Context for Client.resolve()
+ */
+async function resolveResourceReferences(
+  healthcareService: FhirResourceWithId,
+  client: Client,
+  context: FhirResource
+): Promise<FhirResourceWithId> {
+  const derefd: FhirResourceWithId = {
+    ...healthcareService,
     endpoint: [],
     location: [],
     providedBy: {},
   };
-  for (const endpoint of resource.endpoint ?? []) {
+  for (const endpoint of healthcareService.endpoint ?? []) {
     derefd.endpoint.push(
       await client.resolve({
         reference: endpoint.reference,
-        context: bundle,
+        context,
       })
     );
   }
-  for (const location of resource.location ?? []) {
+  for (const location of healthcareService.location ?? []) {
     derefd.location.push(
       await client.resolve({
         reference: location.reference,
-        context: bundle,
+        context,
       })
     );
   }
   derefd.providedBy = await client.resolve({
-    reference: resource.providedBy.reference,
-    context: bundle,
+    reference: healthcareService.providedBy.reference,
+    context,
   });
   return derefd;
 }

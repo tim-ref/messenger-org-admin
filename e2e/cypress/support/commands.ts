@@ -7,6 +7,8 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -33,6 +35,33 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+function enterEndpoint(ep: Endpoint, index: number) {
+  cy.get(`#endpoints\\[${index}\\]\\.connectionType`).click();
+  cy.get(
+    `#menu-endpoints\\[${index}\\]\\.connectionType li[role=option][data-value="${ep.connectionType}"]`
+  ).click();
+
+  if (ep.connectionType === "tim-fa" || ep.connectionType === "tim-bot") {
+    // select given endpoint address
+    cy.get(`#endpoints\\[${index}\\]\\.endpoint_address_ref`).click();
+
+    const mxId = ep.address;
+    expect(mxId).not.to.be.null;
+    cy.get(`#menu-endpoints\\[${index}\\]\\.endpoint_address li[role=option]`)
+      .contains(mxId)
+      .click();
+    cy.get(`#endpoints\\[${index}\\]\\.endpoint_name`).should("be.disabled");
+  } else {
+    cy.get(`#endpoints\\[${index}\\]\\.endpoint_name`).type(ep.name);
+    cy.get(`#endpoints\\[${index}\\]\\.endpoint_address_txt`).type(ep.address);
+  }
+}
+
+function addEndpoint(ep: Endpoint, index: number) {
+  cy.get("button.button-add-endpoints").click();
+  enterEndpoint(ep, index);
+}
+
 Cypress.Commands.add("createHcs", (name, endpoints, additionalArgs) => {
   startGroup("create new HCS");
 
@@ -42,17 +71,7 @@ Cypress.Commands.add("createHcs", (name, endpoints, additionalArgs) => {
 
   cy.get("#name").type(name);
 
-  if (endpoints) {
-    let index = 0;
-    endpoints.forEach(ep => {
-      cy.get("button.button-add-endpoints").click();
-
-      cy.get(`#endpoints\\[${index}\\]\\.endpoint_name`).type(ep.name);
-      cy.get(`#endpoints\\[${index}\\]\\.endpoint_address`).type(ep.address);
-
-      index++;
-    });
-  }
+  endpoints?.forEach(addEndpoint);
 
   if (additionalArgs) {
     if (additionalArgs.serviceProvisionCode) {
@@ -156,17 +175,7 @@ Cypress.Commands.add("editHcs", (hcsName, endpoints) => {
 
   cy.get("tr[resource=healthcare_services] td.column-name").first().click();
 
-  if (endpoints) {
-    let index = 0;
-    endpoints.forEach(ep => {
-      cy.get("button.button-add-endpoints").click();
-
-      cy.get(`#endpoints\\[${index}\\]\\.endpoint_name`).type(ep.name);
-      cy.get(`#endpoints\\[${index}\\]\\.endpoint_address`).type(ep.address);
-
-      index++;
-    });
-  }
+  endpoints?.forEach(addEndpoint);
 
   cy.contains("Save").click();
 
@@ -179,14 +188,14 @@ Cypress.Commands.add("editHcs", (hcsName, endpoints) => {
 // https://j1000.github.io/blog/2022/10/27/enhanced_cypress_logging.html
 Cypress.Commands.add("endGroup", () => {
   collapseLastGroup();
-  Cypress.log({ groupEnd: true, emitOnly: true } as any);
+  Cypress.log({ groupEnd: true, emitOnly: true } as object);
 });
 
 const startGroup = name => {
   Cypress.log({
     displayName: name,
     groupStart: true,
-  } as any);
+  } as object);
 };
 
 function collapseLastGroup() {
