@@ -1,32 +1,26 @@
-upstream regservice {
-  server $REGSERVICE_ADDR;
-}
-
-upstream vzd {
-  server $VZD_ADDR;
-}
-
 server {
     listen       80;
-    #server_name  localhost;
+
+    set $regservice "${REGSERVICE_ADDR}";
+    set $vzd "${VZD_ADDR}";
+
+    resolver kube-dns.kube-system.svc.cluster.local valid=10s;
 
     location / {
         root   /usr/share/nginx/html;
         index  index.html;
     }
 
-    #error_page  404              /404.html;
-
     error_page   500 502 503 504  /50x.html;
     location = /50x.html {
         root   /usr/share/nginx/html;
     }
 
-    location /vzd/ {
-        proxy_pass $VZD_SCHEME://vzd/;
+    location ~ ^/vzd/(.*)$ {
+        proxy_pass ${VZD_SCHEME}://$vzd/$1$is_args$args;
     }
 
-    location /regservice/ {
-        proxy_pass $REGSERVICE_SCHEME://regservice/;
+    location ~ ^/regservice/(.*)$ {
+        proxy_pass ${REGSERVICE_SCHEME}://$regservice/$1$is_args$args;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Modified by akquinet GmbH on 10.12.2024
+ * Modified by akquinet GmbH on 11.03.2025
  *
  * Originally forked https://github.com/Awesome-Technologies/synapse-admin
  *
@@ -360,9 +360,21 @@ const UserTitle = ({ record }) => {
   );
 };
 
+const UserPassword = ({ record }) => {
+  return (
+    <PasswordInput
+      source="password"
+      autoComplete="new-password"
+      helperText="resources.users.helper.password"
+      disabled={record.admin}
+    />
+  );
+};
+
 export const UserEdit = props => {
   const classes = useStyles();
   const translate = useTranslate();
+
   return (
     <Edit {...props} title={<UserTitle />} actions={<UserEditActions />}>
       <TabbedForm toolbar={<UserEditToolbar />}>
@@ -377,11 +389,7 @@ export const UserEdit = props => {
           />
           <TextInput source="id" disabled />
           <TextInput source="displayname" />
-          <PasswordInput
-            source="password"
-            autoComplete="new-password"
-            helperText="resources.users.helper.password"
-          />
+          <UserPassword />
           <SelectInput
             source="user_type"
             choices={choices_type}

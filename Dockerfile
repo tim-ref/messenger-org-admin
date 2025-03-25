@@ -1,4 +1,4 @@
-#Modified by akquinet GmbH on 16.10.2023
+#Modified by akquinet GmbH on 12.03.2025
  #
  #Originally forked https://github.com/Awesome-Technologies/synapse-admin
  #
@@ -16,7 +16,7 @@
  #limitations under the License.
 
 # Builder
-FROM node:18-alpine as base
+FROM node:18-alpine AS base
 
 ARG PUBLIC_URL=/
 ARG REACT_APP_SERVER
@@ -31,11 +31,11 @@ COPY tsconfig.json /src/
 
 COPY src/ /src/src
 COPY public/ /src/public
-ENV DISABLE_ESLINT_PLUGIN true
+ENV DISABLE_ESLINT_PLUGIN=true
 RUN PUBLIC_URL=$PUBLIC_URL yarn build
 
 # App
-FROM nginx:alpine as final
+FROM nginx:alpine AS final
 LABEL maintainer="TIMREF Maintainers"
 ENV VZD_SCHEME=http
 ENV REGSERVICE_SCHEME=http

@@ -1,14 +1,19 @@
 {
-  "name": "synapse-admin",
-  "version": "0.12.0",
-  "description": "Admin GUI for the Matrix.org server Synapse",
-  "author": "Awesome Technologies Innovationslabor GmbH",
+  "name": "tim-admin",
+  "version": "0.13.0",
+  "description": "Admin GUI for the Matrix.org server Synapse with additions for TIM",
+  "contributors": [
+    {
+      "name": "Awesome Technologies Innovationslabor GmbH"
+    },
+    {
+      "name": "akquinet GmbH",
+      "url": "https://akquinet.com"
+    }
+  ],
   "license": "Apache-2.0",
-  "homepage": ".",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Awesome-Technologies/synapse-admin"
-  },
+  "bugs": "https://github.com/tim-ref/messenger-org-admin/issues",
+  "repository": "https://github.com/tim-ref/messenger-org-admin.git",
   "devDependencies": {
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^11.2.6",
