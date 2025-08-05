@@ -228,6 +228,7 @@ export const hcsDataProvider: DataProvider = {
         telecom: params.data.telecom,
         availableTime: params.data.availableTime,
         availabilityExceptions: params.data.availabilityExceptions,
+        locationId: params.data.locationId,
       }
     );
 
@@ -248,10 +249,9 @@ export const hcsDataProvider: DataProvider = {
     const {
       organizationId,
       locationId,
-    }: { organizationId: string; locationId: string } =
+    }: { organizationId: string; locationId?: string } =
       await findOrganizationAndLocationId();
     const organizationReference = "Organization/" + organizationId;
-    const locationReference = "Location/" + locationId;
     const request = params.data as CreateHcsRequest;
 
     const endpoints = await Promise.all(
@@ -278,9 +278,8 @@ export const hcsDataProvider: DataProvider = {
     const createResult = await createHCS(
       request.name,
       organizationReference,
-      locationReference,
       endpointReferences,
-      { serviceProvisionCode, appointmentRequired }
+      { serviceProvisionCode, appointmentRequired, locationId }
     );
 
     return {

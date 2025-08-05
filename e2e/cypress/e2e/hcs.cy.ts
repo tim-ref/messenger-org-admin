@@ -7,9 +7,13 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import { aString, adminUserUri } from "./utils";
+import { adminUserUri, aString } from "./utils";
 
 describe("Healthcare services", () => {
+  const homeserverWithoutHttps = `${Cypress.env("HOME_SERVER_URL")}`.replace(
+    /^https?:\/\//,
+    ""
+  );
   beforeEach("before all tests login", () => {
     cy.browserLogin();
   });
@@ -40,7 +44,7 @@ describe("Healthcare services", () => {
     cy.createHcs(hcsName, [
       {
         name: "my endpoint",
-        address: "matrix:u/mxid:server",
+        address: `matrix:u/mxid:${homeserverWithoutHttps}`,
         connectionType: "tim",
       },
     ]);
@@ -57,7 +61,7 @@ describe("Healthcare services", () => {
     cy.createHcs(hcsName, [
       {
         name: "my tim endpoint",
-        address: "matrix:u/mxid:server",
+        address: `matrix:u/mxid:${homeserverWithoutHttps}`,
         connectionType: "tim",
       },
       {
@@ -77,7 +81,6 @@ describe("Healthcare services", () => {
 
     cy.contains("Delete").click();
   });
-
   it("can create HCS and add endpoints and delete HCS", () => {
     const hcsName = aString("HCS");
 
@@ -86,12 +89,12 @@ describe("Healthcare services", () => {
     cy.editHcs(hcsName, [
       {
         name: "my endpoint",
-        address: "matrix:u/mxid:server",
+        address: `matrix:u/mxid:${homeserverWithoutHttps}`,
         connectionType: "tim",
       },
       {
         name: "my endpoint2",
-        address: "matrix:u/mxid2:server",
+        address: `matrix:u/mxid2:${homeserverWithoutHttps}`,
         connectionType: "tim",
       },
       {
@@ -120,7 +123,7 @@ describe("Healthcare services", () => {
     );
     cy.get("#endpoints\\[0\\]\\.endpoint_address_txt").should(
       "have.value",
-      "matrix:u/mxid:server"
+      `matrix:u/mxid:${homeserverWithoutHttps}`.trim()
     );
 
     cy.get("#endpoints\\[1\\]\\.endpoint_name").should(
@@ -133,7 +136,7 @@ describe("Healthcare services", () => {
     );
     cy.get("#endpoints\\[1\\]\\.endpoint_address_txt").should(
       "have.value",
-      "matrix:u/mxid2:server"
+      `matrix:u/mxid2:${homeserverWithoutHttps}`.trim()
     );
 
     cy.get("#endpoints\\[2\\]\\.endpoint_name").should(
@@ -164,5 +167,36 @@ describe("Healthcare services", () => {
 
     cy.contains("Delete").click();
     cy.contains("Confirm").click();
+  });
+
+  it("cannot add an endpoint outside of the organization to a hcs", () => {
+    const hcsName = aString("HCS");
+    cy.createHcs(hcsName, []);
+
+    const endpoints = [
+      { name: "my endpoint", address: `matrix:u/mxid:matrix.com` },
+    ];
+
+    cy.hcsListOne(hcsName);
+
+    cy.get("tr[resource=healthcare_services] td.column-name").first().click();
+
+    if (endpoints) {
+      endpoints.forEach((ep, index) => {
+        cy.get("button.button-add-endpoints").click();
+
+        cy.get(`#endpoints\\[${index}\\]\\.endpoint_name`).type(ep.name);
+        cy.get(`#endpoints\\[${index}\\]\\.endpoint_address_txt`).type(
+          ep.address
+        );
+      });
+    }
+    cy.contains("Save").click();
+
+    cy.contains("Endpoints can only be created for your organization").should(
+      "contain.text",
+      "Endpoints can only be created for your organization"
+    );
+    cy.contains("Delete").click();
   });
 });

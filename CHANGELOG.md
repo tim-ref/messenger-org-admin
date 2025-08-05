@@ -17,41 +17,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-<!--
-
-### Added
-
-- A new feature.
-
-### Changed
-
-- A change in existing functionality.
-
-### Deprecated
-
-- A soon-to-be removed feature.
+## [0.13.1] (published on 2025-08-05)
 
 ### Fixed
 
-- A bug fix
+- Endpoints not belonging to the admin's organization could be added to healthcare services.
+- Location changes were ignored during healthcare service update.
+- Validation during healthcare service creation does not fail due to missing location.
 
-### Security
-
-- A vulnerability.
-
--->
+## [0.13.0] (published on 2025-03-25)
 
 ### Added
 
-- A Changelog.
+- This Changelog.
 
 ### Changed
 
 - Updated project information in `package.json`.
 
-## 0.12.0 (published on 2025-03-17)
+## [0.12.0] (published on 2025-03-17)
 
-## 0.11.0 (published on 2025-03-11)
+## [0.11.0] (published on 2025-03-11)
 
 ### Added
 
@@ -63,22 +49,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Allow '+' in Matrix identifiers.
 - Improved validation of FHIR Endpoint addresses.
 
-## 0.10.1 (published on 2025-02-18)
+## [0.10.1] (published on 2025-02-18)
 
-## 0.10.0 (published on 2024-07-04)
+## [0.10.0] (published on 2024-07-04)
 
 ### Changed
 
 - Adjusted `User-Agent ` header (A_23104-02).
 
-## 0.9.0 (published on 2024-03-13)
+## [0.9.0] (published on 2024-03-13)
 
 ### Changed
 
 - FHIR Endpoint address validation allows Matrix URLs.
 - Removed animation that interfered with automated testing.
 
-## 0.8.8 (published on 2024-02-21)
+## [0.8.8] (published on 2024-02-21)
 
 ### Added
 

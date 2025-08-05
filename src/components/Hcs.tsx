@@ -222,7 +222,7 @@ export const HcsCreate = (props: CreateProps) => (
 
 export const HcsEdit = (props: EditProps) => (
   <Edit {...props} mutationMode="pessimistic">
-    <SimpleForm validate={validateHcsForm}>
+    <SimpleForm submitOnEnter={false} validate={validateHcsForm}>
       <TextInput source="id" disabled />
       <TextInput source="name" autoComplete="off" />
       <TextInput source="organization_id" disabled />
@@ -340,7 +340,11 @@ const validateHcsForm = (form: HcsForm): HcsForm => {
     } else {
       if (!form.endpoint_address.match(/matrix:u\/.*:.*/)) {
         epError.endpoint_address =
-          "Address must match matrix:u/name:homeserver!";
+          "Address must match the following format: matrix:u/username:homeserver";
+      }
+      const homeserver = localStorage.getItem("home_server");
+      if (!form.endpoint_address.endsWith(":" + homeserver)) {
+        epError.endpoint_address = `Endpoints can only be created for your organization, it has to end on your homeserver -> :${homeserver}`;
       }
     }
     return epError;

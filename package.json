@@ -1,6 +1,6 @@
 {
   "name": "tim-admin",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "description": "Admin GUI for the Matrix.org server Synapse with additions for TIM",
   "contributors": [
     {

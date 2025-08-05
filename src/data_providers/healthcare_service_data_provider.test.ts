@@ -68,7 +68,7 @@ const createEndpointMock = createEndpoint as jest.MockedFn<
 
 const givenOrganizationAndLocation = (
   organizationId = "anOrganizationId",
-  locationId = "anLocationId"
+  locationId = "aLocationId"
 ) =>
   findOrganizationAndLocationIdMock.mockReturnValue(
     Promise.resolve({
@@ -85,7 +85,7 @@ const givenCreateEndpointSucceeds = () =>
     })
   );
 
-describe("Healthcareservice Dataprovider", () => {
+describe("Healthcareservice data provider", () => {
   beforeEach(() => {
     searchHCSMock.mockReset();
     deleteHCSMock.mockReset();
@@ -182,9 +182,12 @@ describe("Healthcareservice Dataprovider", () => {
       expect(createHCSMock).toHaveBeenCalledWith(
         "my name",
         expect.anything(),
-        expect.anything(),
         [],
-        expect.anything()
+        {
+          appointmentRequired: undefined,
+          locationId: "aLocationId",
+          serviceProvisionCode: [],
+        }
       );
     });
 
@@ -200,9 +203,12 @@ describe("Healthcareservice Dataprovider", () => {
       expect(createHCSMock).toHaveBeenCalledWith(
         expect.anything(),
         expect.anything(),
-        expect.anything(),
         [],
-        { serviceProvisionCode: [ServiceProvisionCode.free] }
+        {
+          appointmentRequired: undefined,
+          locationId: "aLocationId",
+          serviceProvisionCode: [ServiceProvisionCode.free],
+        }
       );
     });
 
@@ -218,9 +224,33 @@ describe("Healthcareservice Dataprovider", () => {
       expect(createHCSMock).toHaveBeenCalledWith(
         expect.anything(),
         "Organization/myOrganizationId",
-        "Location/myLocationId",
         expect.anything(),
-        expect.anything()
+        {
+          appointmentRequired: undefined,
+          locationId: "myLocationId",
+          serviceProvisionCode: [],
+        }
+      );
+    });
+
+    it("create without location", async () => {
+      givenOrganizationAndLocation("myOrganizationId", null);
+
+      const form: HcsForm = { name: aString() };
+
+      await hcsDataProvider.create("hcs", {
+        data: { ...form },
+      });
+
+      expect(createHCSMock).toHaveBeenCalledWith(
+        expect.anything(),
+        "Organization/myOrganizationId",
+        expect.anything(),
+        {
+          appointmentRequired: undefined,
+          locationId: null,
+          serviceProvisionCode: [],
+        }
       );
     });
 
@@ -249,9 +279,12 @@ describe("Healthcareservice Dataprovider", () => {
       expect(createHCSMock).toHaveBeenCalledWith(
         "my name",
         expect.anything(),
-        expect.anything(),
         ["Endpoint/anEndpointId", "Endpoint/anEndpointId"],
-        expect.anything()
+        {
+          appointmentRequired: undefined,
+          locationId: "aLocationId",
+          serviceProvisionCode: [],
+        }
       );
     });
 
@@ -444,6 +477,7 @@ describe("Healthcareservice Dataprovider", () => {
         serviceProvisionCode?: number[];
         appointmentRequired: boolean;
         communication?: string[];
+        locationId?: string;
       };
 
       const oldState: HcsView = {
@@ -453,11 +487,13 @@ describe("Healthcareservice Dataprovider", () => {
         organization_name: aString(),
         organization_id: aString(),
         appointmentRequired: false,
+        locationId: aString(),
       };
 
       const newState: HcsView = {
         ...oldState,
         serviceProvisionCode: [0],
+        locationId: null,
 
         endpoints: [
           {
@@ -494,6 +530,7 @@ describe("Healthcareservice Dataprovider", () => {
           serviceProvisionCode: [ServiceProvisionCode.free],
           appointmentRequired: false,
           communication: [],
+          locationId: null,
         }
       );
     });

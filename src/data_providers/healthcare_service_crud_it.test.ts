@@ -52,8 +52,7 @@ describe("vzd ru integration test", () => {
   const locationId = "e8d967d8-c419-45df-93eb-fcd36c9eda95";
   const organizationReference =
     "Organization/2e7059e0-ffd7-4233-b986-87681104bf0c";
-  const locationReference = "Location/" + locationId;
-  jest.setTimeout(10000);
+  jest.setTimeout(20000);
 
   describe("searchHcs", () => {
     it("can get HealthcareService list", async () => {
@@ -92,8 +91,8 @@ describe("vzd ru integration test", () => {
       const result = await createHCS(
         hcsName,
         organizationReference,
-        locationReference,
-        endpointReference
+        endpointReference,
+        { locationId }
       );
 
       const searchResult = await searchHCS({
@@ -117,8 +116,8 @@ describe("vzd ru integration test", () => {
       const result = await createHCS(
         hcsName,
         organizationReference,
-        locationReference,
-        endpointReference
+        endpointReference,
+        { locationId }
       );
       expect(result.resourceType).toBe("HealthcareService");
 
@@ -135,13 +134,9 @@ describe("vzd ru integration test", () => {
     it("hcs appointmentRequired", async () => {
       const hcsName = aString();
 
-      const hcs = await createHCS(
-        hcsName,
-        organizationReference,
-        locationReference,
-        [],
-        {}
-      );
+      const hcs = await createHCS(hcsName, organizationReference, [], {
+        locationId,
+      });
 
       expect(hcs.appointmentRequired).toBeUndefined();
 
@@ -165,13 +160,9 @@ describe("vzd ru integration test", () => {
     it("hcs location", async () => {
       const hcsName = aString();
 
-      const hcs = await createHCS(
-        hcsName,
-        organizationReference,
-        locationReference,
-        [],
-        {}
-      );
+      const hcs = await createHCS(hcsName, organizationReference, [], {
+        locationId,
+      });
 
       expect(hcs.appointmentRequired).toBeUndefined();
 
@@ -188,13 +179,9 @@ describe("vzd ru integration test", () => {
     it("hcs communication", async () => {
       const hcsName = aString();
 
-      const hcs = await createHCS(
-        hcsName,
-        organizationReference,
-        locationReference,
-        [],
-        {}
-      );
+      const hcs = await createHCS(hcsName, organizationReference, [], {
+        locationId,
+      });
 
       expect(hcs.communication).toBeUndefined();
 
@@ -217,13 +204,9 @@ describe("vzd ru integration test", () => {
     it("hcs availability", async () => {
       const hcsName = aString();
 
-      const hcs = await createHCS(
-        hcsName,
-        organizationReference,
-        locationReference,
-        [],
-        {}
-      );
+      const hcs = await createHCS(hcsName, organizationReference, [], {
+        locationId,
+      });
 
       await updateHCS(
         { id: hcs.id, name: hcsName, endpointReferences: [] },
@@ -280,8 +263,8 @@ describe("vzd ru integration test", () => {
       const result = await createHCS(
         hcsName,
         organizationReference,
-        locationReference,
-        endpointReference
+        endpointReference,
+        { locationId }
       );
       expect(result.resourceType).toBe("HealthcareService");
 
@@ -312,13 +295,13 @@ describe("vzd ru integration test", () => {
       const hcs = await createHCS(
         hcsName,
         organizationReference,
-        locationReference,
         endpointReferences,
         {
           serviceProvisionCode: [
             ServiceProvisionCode.disc,
             ServiceProvisionCode.free,
           ],
+          locationId,
         }
       );
 
@@ -357,15 +340,10 @@ describe("vzd ru integration test", () => {
       const hcsName = aString("hcs-name");
 
       try {
-        await createHCS(
-          hcsName,
-          organizationReference,
-          locationReference,
-          endpointReferences,
-          {
-            speciality: [Specialty.ALLG],
-          }
-        );
+        await createHCS(hcsName, organizationReference, endpointReferences, {
+          speciality: [Specialty.ALLG],
+          locationId,
+        });
 
         fail("should not come here!");
       } catch (e) {
@@ -386,12 +364,9 @@ describe("vzd ru integration test", () => {
     it("update HCS name", async () => {
       const hcsName = aString("hcs-name");
 
-      const hcs = await createHCS(
-        hcsName,
-        organizationReference,
-        locationReference,
-        []
-      );
+      const hcs = await createHCS(hcsName, organizationReference, [], {
+        locationId,
+      });
 
       const updatedName = aString("updated-name");
       await updateHCS(
@@ -434,8 +409,8 @@ describe("vzd ru integration test", () => {
       const result = await createHCS(
         hcsName,
         organizationReference,
-        locationReference,
-        [`Endpoint/${endpoint.id}`]
+        [`Endpoint/${endpoint.id}`],
+        { locationId }
       );
 
       await updateHCS(
@@ -464,12 +439,9 @@ describe("vzd ru integration test", () => {
     it("can update HCS with new endpoints", async () => {
       const hcsName = aString("hcs-name");
 
-      const hcs = await createHCS(
-        hcsName,
-        organizationReference,
-        locationReference,
-        []
-      );
+      const hcs = await createHCS(hcsName, organizationReference, [], {
+        locationId,
+      });
 
       await updateHcsWithEndpoints({
         id: hcs.id,
@@ -525,8 +497,8 @@ describe("vzd ru integration test", () => {
       const hcs = await createHCS(
         hcsName,
         organizationReference,
-        locationReference,
-        [`Endpoint/${endpoint.id}`, `Endpoint/${endpoint2.id}`]
+        [`Endpoint/${endpoint.id}`, `Endpoint/${endpoint2.id}`],
+        { locationId }
       );
 
       await updateHcsWithEndpoints({
@@ -591,8 +563,8 @@ describe("vzd ru integration test", () => {
       const hcs = await createHCS(
         hcsName,
         organizationReference,
-        locationReference,
-        [`Endpoint/${endpoint.id}`, `Endpoint/${endpoint2.id}`]
+        [`Endpoint/${endpoint.id}`, `Endpoint/${endpoint2.id}`],
+        { locationId }
       );
 
       await updateHcsWithEndpoints({

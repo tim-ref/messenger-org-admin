@@ -124,15 +124,14 @@ Cypress.Commands.add("browserLogin", () => {
 
   cy.visit("http://localhost:3000");
 
+  const homeserverUrl = Cypress.env("HOME_SERVER_URL");
+  cy.get("input[name=base_url]").type(homeserverUrl);
   // login form
   const username = Cypress.env("ORG_ADMIN_USERNAME");
   cy.get("input[name=username]").type(username);
 
   const password = Cypress.env("ORG_ADMIN_PASSWORD");
   cy.get("input[name=password]").type(password);
-
-  const homeserverUrl = Cypress.env("HOME_SERVER_URL");
-  cy.get("input[name=base_url]").type(homeserverUrl);
 
   cy.get("button[type=submit]").click();
 

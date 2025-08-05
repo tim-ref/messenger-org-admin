@@ -29,7 +29,7 @@ afterAll(() => {
 });
 
 describe("vzd ru integration test", () => {
-  jest.setTimeout(10_000);
+  jest.setTimeout(20_000);
 
   it("can find endpoint by id", async () => {
     const name = aString("endpoint name");

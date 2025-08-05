@@ -108,14 +108,9 @@ const parseAvailabilityExceptions = (
 export const createHCS = async (
   name: string,
   organizationReference: string,
-  locationReference: string,
   endpointReferences: string[],
   optionalArgs?: OptionalCreateUpdateHcsArgs
 ): Promise<HealthcareService> => {
-  if (optionalArgs?.locationId) {
-    throw Error("not supported to set alternative location during create!");
-  }
-
   const endpoint = endpointReferences.map(e => ({
     reference: e,
   }));
@@ -127,6 +122,8 @@ export const createHCS = async (
   const specialty: CodableConcept[] = parseSpeciality(optionalArgs?.speciality);
 
   const appointmentRequired = optionalArgs?.appointmentRequired;
+
+  const locationId = optionalArgs?.locationId;
 
   const request = {
     resourceType: "HealthcareService",
@@ -142,11 +139,14 @@ export const createHCS = async (
           "https://gematik.de/fhir/directory/StructureDefinition/HealthcareServiceDirectory",
         ],
       },
-      location: [
-        {
-          reference: locationReference,
-        },
-      ],
+      location:
+        locationId != null
+          ? [
+              {
+                reference: `Location/${locationId}`,
+              },
+            ]
+          : [],
       endpoint,
       serviceProvisionCode,
       specialty,
@@ -218,7 +218,7 @@ export const searchHCS = async (
 
 export const findOrganizationAndLocationId = async (): Promise<{
   organizationId: string;
-  locationId: string;
+  locationId?: string;
 }> => {
   const tId = await telematikId();
   const bundle = (await withClient(
@@ -235,8 +235,8 @@ export const findOrganizationAndLocationId = async (): Promise<{
     throw new Error(`no results for telematikId ${tId} from token`);
   }
 
-  let organizationId;
-  let locationId;
+  let organizationId: string;
+  let locationId: string | null = null;
 
   bundle.entry.forEach(entry => {
     if (entry.resource.resourceType === "Location") {
@@ -249,7 +249,6 @@ export const findOrganizationAndLocationId = async (): Promise<{
 
   if (!organizationId)
     throw Error(`No organization id found for telematikId ${tId}`);
-  if (!locationId) throw Error(`No location id found for telematikId ${tId}`);
 
   return { organizationId, locationId };
 };
